@@ -431,6 +431,7 @@
     /* ---- RIGHT COLUMN ---- */
     .hero__right {
       position: relative;
+      overflow: visible; /* card pode transbordar para a esquerda no desktop */
     }
 
     /* Image area */
@@ -497,16 +498,18 @@
       opacity: .45;
     }
 
-    /* Gold accent tag on image — top right */
+    /* Gold accent tag on image — top right (desktop only) */
     .hero__img-tag {
       position: absolute;
-      top: clamp(90px, 12vh, 130px);
-      right: 32px;
+      top: clamp(96px, 13vh, 136px); /* sempre abaixo do nav fixo */
+      right: 28px;
+      z-index: 5;
       display: flex;
       align-items: center;
       gap: 7px;
-      background: rgba(248, 247, 244, 0.88);
-      backdrop-filter: blur(10px);
+      background: rgba(248, 247, 244, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--c-gold-border);
       padding: 8px 14px;
       opacity: 0;
@@ -531,11 +534,11 @@
     }
 
     /* ---- FLOATING STAT CARD ---- */
-    /* Absolute child of .hero, spans the split boundary */
+    /* Filho de .hero__right; usa left negativo para cruzar a fronteira do split */
     .hero__card {
       position: absolute;
-      left: calc(var(--split) - 32px);
-      bottom: clamp(60px, 10vh, 110px);
+      left: -36px;
+      bottom: clamp(60px, 10vh, 108px);
       z-index: 10;
       width: 196px;
       background: var(--c-white);
@@ -592,37 +595,88 @@
     @media (max-width: 960px) {
       .hero {
         grid-template-columns: 1fr;
-        grid-template-rows: 48vh 1fr;
+        grid-template-rows: 54vh 1fr;  /* imagem generosa no mobile */
         height: auto;
         min-height: 100dvh;
       }
-      .hero__right { grid-row: 1; }
+
+      /* Imagem vem primeiro visualmente */
+      .hero__right {
+        grid-row: 1;
+        overflow: hidden; /* clipar imagem no mobile */
+      }
+
+      /* Conteúdo abaixo */
       .hero__left {
         grid-row: 2;
-        padding: 36px clamp(22px, 6vw, 48px) 60px;
+        padding: 36px clamp(22px, 6vw, 48px) 64px;
         justify-content: flex-start;
       }
       .hero__left::after { display: none; }
-      .hero__card {
-        left: auto;
-        right: 20px;
-        bottom: auto;
-        top: calc(48vh - 130px);
-        width: 168px;
+
+      /* Imagem ocupa toda a área do hero__right */
+      .hero__img {
+        position: absolute;
+        inset: 0;
       }
-      .hero__img-tag { top: 18px; }
+
+      /* Card: compact, dentro da área da imagem, canto inferior esquerdo */
+      .hero__card {
+        left: 16px;
+        right: auto;
+        bottom: 20px;
+        top: auto;
+        width: 152px;
+        padding: 14px 16px;
+        box-shadow: 0 12px 36px rgba(28, 25, 23, 0.18), 0 0 0 1px rgba(255,255,255,0.9);
+      }
+      .card-num  { font-size: 1.65rem; margin-bottom: 2px; }
+      .card-lbl  { font-size: .55rem; margin-bottom: 10px; }
+      .card-quote { font-size: .72rem; }
+      .card-divider { margin-bottom: 10px; }
+
+      /* Tag: esconder para não colidir com hamburger */
+      .hero__img-tag { display: none; }
+
       .hero__scroll { display: none; }
-      .nav__links { display: none; }
-      .nav__burger { display: flex; }
+      .nav__links   { display: none; }
+      .nav__burger  { display: flex; }
     }
 
     @media (max-width: 520px) {
-      .hero__headline { font-size: 2.75rem; }
+      .hero { grid-template-rows: 48vh 1fr; }
+      .hero__headline { font-size: 2.6rem; }
       .hero__sub { max-width: 100%; }
-      .hero__trust { flex-wrap: wrap; gap: 22px; border-top: none; padding-top: 0; }
-      .trust-stat + .trust-stat { border-left: none; padding-left: 0; }
+
+      /* Eyebrow: reduzir espaçamento para não cortar */
+      .eyebrow__text { letter-spacing: .14em; font-size: .56rem; }
+
+      /* Trust: quebrar em 2 colunas */
+      .hero__trust {
+        flex-wrap: wrap;
+        gap: 18px 0;
+        border-top: none;
+        padding-top: 0;
+      }
+      .trust-stat {
+        flex: 0 0 50%;
+        padding-right: 0;
+      }
+      .trust-stat + .trust-stat {
+        border-left: none;
+        padding-left: 0;
+      }
+      .trust-stat:nth-child(2) {
+        padding-left: 20px;
+        border-left: 1px solid var(--c-line);
+      }
+
+      /* Botão de agendamento no nav: esconder em telas muito pequenas */
       .nav__btn { display: none; }
-      .hero__card { width: 148px; }
+
+      /* Card menor ainda */
+      .hero__card { width: 138px; padding: 12px 14px; }
+      .card-num { font-size: 1.5rem; }
     }
 
     /* Reduced motion */
@@ -814,15 +868,15 @@
           <span class="img-tag__text">Avaliações abertas</span>
         </div>
 
-      </div>
+        <!-- Card flutuante — agora filho de hero__right para posicionamento preciso -->
+        <aside class="hero__card" id="heroCard" aria-label="Taxa de satisfação">
+          <div class="card-num">98%</div>
+          <div class="card-lbl">Taxa de satisfação<br>dos pacientes</div>
+          <div class="card-divider"></div>
+          <p class="card-quote">"Resultado muito além do que eu esperava."</p>
+        </aside>
 
-      <!-- Floating stat card (spans the split) -->
-      <aside class="hero__card" id="heroCard" aria-label="Taxa de satisfação">
-        <div class="card-num">98%</div>
-        <div class="card-lbl">Taxa de satisfação<br>dos pacientes</div>
-        <div class="card-divider"></div>
-        <p class="card-quote">"Resultado muito além do que eu esperava."</p>
-      </aside>
+      </div>
 
     </section>
   </main>
