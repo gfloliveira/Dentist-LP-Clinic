@@ -626,6 +626,280 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
+
+    /* ============================================================
+       SECTION 02 — A CLÍNICA / TECNOLOGIA
+    ============================================================ */
+    .clinic {
+      background: #F4F1EB;
+      overflow: hidden;
+      position: relative;
+    }
+    .clinic::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-gold-border) 30%, var(--c-gold-border) 70%, transparent);
+    }
+
+    .clinic__inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px);
+      display: grid;
+      grid-template-columns: 44% 1fr;
+      gap: clamp(48px, 6vw, 96px);
+      align-items: center;
+    }
+
+    /* ── Eyebrow ── */
+    .clinic__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .clinic__eyebrow-line {
+      display: block;
+      width: 36px;
+      height: 1.5px;
+      background: var(--c-gold);
+      transform-origin: left;
+      transform: scaleX(0);
+      flex-shrink: 0;
+    }
+    .clinic__eyebrow-text {
+      font-family: var(--f-sans);
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+    }
+
+    /* ── Title ── */
+    .clinic__title {
+      font-family: var(--f-serif);
+      font-size: clamp(2.2rem, 3.4vw, 3.4rem);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--c-text);
+      margin: 0 0 28px;
+      opacity: 0;
+      transform: translateY(28px);
+    }
+    .clinic__title em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+
+    /* ── Description ── */
+    .clinic__desc {
+      font-family: var(--f-sans);
+      font-size: clamp(.9rem, 1.05vw, 1rem);
+      line-height: 1.8;
+      color: var(--c-text-2);
+      margin: 0 0 48px;
+      max-width: 440px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* ── Technology grid ── */
+    .clinic__tech {
+      list-style: none;
+      margin: 0 0 48px;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px 28px;
+    }
+    .tech-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .tech-icon {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--c-gold-pale);
+      border: 1px solid var(--c-gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .tech-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--c-gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .tech-name {
+      font-family: var(--f-sans);
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--c-text);
+      margin: 0 0 4px;
+      line-height: 1.3;
+    }
+    .tech-desc {
+      font-family: var(--f-sans);
+      font-size: .74rem;
+      line-height: 1.6;
+      color: var(--c-text-2);
+      margin: 0;
+    }
+
+    /* ── CTA link ── */
+    .clinic__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--f-sans);
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--c-gold);
+      text-decoration: none;
+      padding-bottom: 3px;
+      border-bottom: 1.5px solid var(--c-gold);
+      transition: gap .3s var(--ease-expo), color .25s;
+      opacity: 0;
+    }
+    .clinic__cta:hover { gap: 16px; color: var(--c-gold-dk); }
+    .clinic__cta svg {
+      width: 14px; height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform .3s var(--ease-expo);
+    }
+    .clinic__cta:hover svg { transform: translateX(4px); }
+
+    /* ── Right: image composition ── */
+    .clinic__right {
+      position: relative;
+      height: clamp(480px, 55vw, 660px);
+    }
+
+    .clinic__img-main {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 82%;
+      height: 100%;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #E8E3DA 0%, #D4CFC8 100%);
+    }
+    .clinic__img-main img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+    }
+
+    .clinic__img-secondary {
+      position: absolute;
+      bottom: 9%;
+      left: 0;
+      width: 46%;
+      height: 46%;
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #DDD9D2 0%, #C8C3BB 100%);
+      box-shadow: 0 24px 64px rgba(28,25,23,.16);
+      border: 3px solid var(--c-white);
+      z-index: 3;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    .clinic__img-secondary img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .clinic__frame {
+      position: absolute;
+      top: 22px;
+      right: -14px;
+      width: 58%;
+      height: 52%;
+      border: 1.5px solid var(--c-gold-border);
+      border-radius: 4px;
+      z-index: 0;
+      opacity: 0;
+      transform: translate(8px, -8px);
+      pointer-events: none;
+    }
+
+    .clinic__badge {
+      position: absolute;
+      top: 9%;
+      left: 7%;
+      z-index: 4;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
+      border: 1px solid var(--c-gold-border);
+      border-radius: 12px;
+      padding: 16px 22px;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    .badge-num {
+      display: block;
+      font-family: var(--f-serif);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--c-gold);
+      line-height: 1;
+    }
+    .badge-lbl {
+      font-family: var(--f-sans);
+      font-size: .66rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      color: var(--c-text-2);
+      line-height: 1.45;
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .clinic__inner {
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+      .clinic__right {
+        height: clamp(320px, 70vw, 480px);
+        order: -1;
+      }
+      .clinic__desc { max-width: 100%; }
+      .clinic__frame { right: -8px; }
+    }
+    @media (max-width: 520px) {
+      .clinic__tech {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .clinic__title { font-size: 2rem; }
+      .clinic__badge { display: none; }
+      .clinic__frame { display: none; }
+    }
   </style>
 </head>
 
@@ -805,6 +1079,155 @@
       </div>
 
     </section>
+
+    <!-- ============================================================
+         SECTION 02 — A CLÍNICA / TECNOLOGIA
+    ============================================================ -->
+    <section class="clinic" id="sobre" aria-labelledby="clinicTitle">
+      <div class="clinic__inner">
+
+        <!-- Left: text content -->
+        <div class="clinic__left">
+
+          <div class="clinic__eyebrow">
+            <span class="clinic__eyebrow-line" aria-hidden="true"></span>
+            <span class="clinic__eyebrow-text">A Clínica</span>
+          </div>
+
+          <h2 class="clinic__title" id="clinicTitle">
+            A Excelência Está<br>em Cada <em>Detalhe.</em>
+          </h2>
+
+          <p class="clinic__desc">
+            Fundada com a missão de unir precisão científica e estética
+            refinada, a DentalArte conta com tecnologia de ponta e
+            especialistas dedicados a oferecer a melhor experiência
+            odontológica do Brasil.
+          </p>
+
+          <ul class="clinic__tech" aria-label="Tecnologias da clínica">
+
+            <li class="tech-item">
+              <div class="tech-icon" aria-hidden="true">
+                <!-- Scanner 3D: cube wireframe -->
+                <svg viewBox="0 0 24 24"><polyline points="21 16 21 8 12 3 3 8 3 16 12 21 21 16"/><line x1="3.27" y1="6.96" x2="12" y2="12.01"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+              </div>
+              <div>
+                <h3 class="tech-name">Scanner 3D iTero</h3>
+                <p class="tech-desc">Mapeamento digital preciso, sem moldagem desconfortável.</p>
+              </div>
+            </li>
+
+            <li class="tech-item">
+              <div class="tech-icon" aria-hidden="true">
+                <!-- CAD/CAM: screen + crown -->
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M9 10c0-1.7 1.3-3 3-3s3 1.3 3 3c0 1-.4 1.9-1 2.5-.3.3-.5.7-.5 1.2V14H10v-.3c0-.5-.2-.9-.5-1.2C9.4 11.9 9 11 9 10z"/></svg>
+              </div>
+              <div>
+                <h3 class="tech-name">CAD/CAM Cerec</h3>
+                <p class="tech-desc">Próteses cerâmicas prontas em uma única sessão.</p>
+              </div>
+            </li>
+
+            <li class="tech-item">
+              <div class="tech-icon" aria-hidden="true">
+                <!-- Tomografia: concentric rings -->
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><line x1="12" y1="3" x2="12" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="3" y1="12" x2="7" y2="12"/><line x1="17" y1="12" x2="21" y2="12"/></svg>
+              </div>
+              <div>
+                <h3 class="tech-name">Tomografia 3D</h3>
+                <p class="tech-desc">Diagnóstico completo com imagens tridimensionais de alta resolução.</p>
+              </div>
+            </li>
+
+            <li class="tech-item">
+              <div class="tech-icon" aria-hidden="true">
+                <!-- Laser: lightning bolt -->
+                <svg viewBox="0 0 24 24"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <div>
+                <h3 class="tech-name">Laser Dental</h3>
+                <p class="tech-desc">Procedimentos menos invasivos, sem cortes e recuperação rápida.</p>
+              </div>
+            </li>
+
+          </ul>
+
+          <a href="#contato" class="clinic__cta">
+            Conheça Nossa Clínica
+            <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+
+        </div>
+
+        <!-- Right: image composition -->
+        <div class="clinic__right" id="clinicImgCol">
+
+          <!--
+            ═══════════════════════════════════════════════════════════════
+            IMAGEM PRINCIPAL — Interior da clínica
+            Arquivo: assets/clinica-interior.jpg
+
+            PROMPT (Midjourney / DALL-E 3):
+            PT: "Fotografia de interiores premium de uma clínica
+            odontológica de alto padrão — sala de tratamento moderna
+            com cadeira odontológica branca, iluminação embutida quente,
+            paredes brancas com detalhes em madeira clara e metais
+            dourados, planta decorativa, ambiente clean e luxuoso,
+            fotografia profissional de arquitetura, tons neutros quentes,
+            4K, formato retrato 2:3."
+
+            EN: "Premium interior photography of a luxury dental clinic
+            — modern treatment room, white dental chair, warm recessed
+            lighting, white walls with light wood and brushed gold metal
+            accents, indoor plant, clean upscale atmosphere, professional
+            architectural photography, warm neutral tones, 4K, portrait
+            2:3 ratio."
+            ═══════════════════════════════════════════════════════════════
+          -->
+          <div class="clinic__img-main" id="clinicImgMain">
+            <img src="assets/clinica-interior.jpg"
+                 alt="Interior moderno da clínica DentalArte"
+                 loading="lazy">
+          </div>
+
+          <!--
+            ═══════════════════════════════════════════════════════════════
+            IMAGEM SECUNDÁRIA — Equipamento / close de tecnologia
+            Arquivo: assets/clinica-equipamento.jpg
+
+            PROMPT (Midjourney / DALL-E 3):
+            PT: "Close fotográfico de scanner intraoral odontológico
+            moderno — acabamento branco e prata, luz LED azul-branca
+            tecnológica, fundo desfocado em tons escuros suaves,
+            estilo editorial de tecnologia médica premium, 4K."
+
+            EN: "Close-up editorial photograph of a modern intraoral
+            dental scanner — white and silver finish, cool blue-white
+            LED glow, softly blurred dark-neutral background, premium
+            medical technology editorial style, 4K."
+            ═══════════════════════════════════════════════════════════════
+          -->
+          <div class="clinic__img-secondary" id="clinicImgSec">
+            <img src="assets/clinica-equipamento.jpg"
+                 alt="Equipamento odontológico de alta tecnologia"
+                 loading="lazy">
+          </div>
+
+          <!-- Gold decorative frame -->
+          <div class="clinic__frame" id="clinicFrame" aria-hidden="true"></div>
+
+          <!-- Experience badge -->
+          <div class="clinic__badge" id="clinicBadge" aria-hidden="true">
+            <span class="badge-num">14</span>
+            <span class="badge-lbl">Anos de<br>Experiência</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- ============================================================
@@ -922,6 +1345,37 @@
       if (t) lenis.scrollTo(t, { offset: -72, duration: 1.6 });
     });
   });
+
+  /* ============================================================
+     SECTION 02 — CLINIC SCROLL ANIMATIONS
+  ============================================================ */
+  (function () {
+    if (!document.querySelector('.clinic')) return;
+
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.clinic',
+        start: 'top 72%',
+        toggleActions: 'play none none none',
+      },
+      defaults: { ease: 'power4.out' }
+    });
+
+    /* Left column — text elements */
+    tl2.to('.clinic__eyebrow', { opacity: 1, y: 0, duration: .6 });
+    tl2.to('.clinic__eyebrow-line', { scaleX: 1, duration: .72, ease: 'power3.inOut' }, '-=.36');
+    tl2.to('.clinic__title',  { opacity: 1, y: 0, duration: .95 }, '-=.4');
+    tl2.to('.clinic__desc',   { opacity: 1, y: 0, duration: .85 }, '-=.6');
+    tl2.to('.tech-item',      { opacity: 1, y: 0, duration: .65, stagger: .1 }, '-=.55');
+    tl2.to('.clinic__cta',    { opacity: 1, duration: .55 }, '-=.3');
+
+    /* Right column — slides in from right, then children reveal */
+    tl2.from('#clinicImgCol', { x: 48, duration: 1.1, ease: 'power3.out' }, 0.12);
+    tl2.from('#clinicImgMain img', { scale: 1.08, duration: 1.4, ease: 'power3.out' }, 0.12);
+    tl2.to('#clinicImgSec',  { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, '-=.6');
+    tl2.to('#clinicBadge',   { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, '-=.5');
+    tl2.to('#clinicFrame',   { opacity: 1, x: 0, y: 0, duration: .85 }, '-=.65');
+  })();
   </script>
 
 </body>
