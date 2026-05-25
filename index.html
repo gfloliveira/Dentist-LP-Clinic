@@ -3,1280 +3,631 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Clínica Odontológica de Elite — Lentes de Contato Dental, Implantes Premium e Harmonização Orofacial com tecnologia de ponta em São Paulo.">
-  <title>DentalArte — A Precisão que Redefine o Seu Sorriso</title>
+  <meta name="description" content="DentalArte — Odontologia de excelência. Lentes de porcelana, implantes e harmonização orofacial em São Paulo.">
+  <title>DentalArte — A Arte de Transformar Sorrisos</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
 
   <style>
     /* ============================================================
-       CSS CUSTOM PROPERTIES — TEMA DARK MODE CLÍNICO
+       DESIGN TOKENS
     ============================================================ */
     :root {
-      /* Cores principais */
-      --color-bg:            #0A1128;
-      --color-bg-deep:       #060C1A;
-      --color-surface:       rgba(255, 255, 255, 0.04);
-      --color-surface-hover: rgba(255, 255, 255, 0.07);
-      --color-primary:       #00E5FF;
-      --color-primary-glow:  rgba(0, 229, 255, 0.28);
-      --color-primary-muted: rgba(0, 229, 255, 0.08);
-      --color-text:          #E8EDF5;
-      --color-text-muted:    rgba(232, 237, 245, 0.52);
-      --color-border:        rgba(255, 255, 255, 0.08);
-      --color-border-active: rgba(0, 229, 255, 0.45);
+      --c-bg:           #F8F7F4;
+      --c-white:        #FFFFFF;
+      --c-gold:         #C49A3C;
+      --c-gold-dk:      #9E7B28;
+      --c-gold-lt:      #D9B96A;
+      --c-gold-pale:    rgba(196, 154, 60, 0.07);
+      --c-gold-border:  rgba(196, 154, 60, 0.22);
+      --c-text:         #1C1917;
+      --c-text-2:       #78716C;
+      --c-text-3:       #A8A29E;
+      --c-line:         rgba(28, 25, 23, 0.09);
 
-      /* Glassmorphism */
-      --glass-blur:   blur(20px) saturate(180%);
-      --glass-border: 1px solid rgba(255, 255, 255, 0.09);
-      --glass-shadow: 0 8px 40px rgba(0, 0, 0, 0.45);
+      --f-serif: 'Cormorant Garamond', 'Georgia', serif;
+      --f-sans:  'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
-      /* Tipografia */
-      --font-display: 'Syne', sans-serif;
-      --font-body:    'Plus Jakarta Sans', sans-serif;
-
-      /* Layout */
-      --container-max: 1300px;
-      --section-pad:   clamp(80px, 10vw, 140px);
+      --nav-h:   76px;
+      --split:   53%;
+      --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* ============================================================
-       RESET & BASE
+       RESET
     ============================================================ */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { font-size: 16px; }
 
     body {
-      background-color: var(--color-bg);
-      color: var(--color-text);
-      font-family: var(--font-body);
+      background: var(--c-bg);
+      color: var(--c-text);
+      font-family: var(--f-sans);
       overflow-x: hidden;
-      cursor: none;
       -webkit-font-smoothing: antialiased;
     }
 
-    img, video, svg { display: block; max-width: 100%; }
-    a { text-decoration: none; }
-    button { cursor: pointer; }
+    @media (hover: hover) { body { cursor: none; } }
+
+    img, video { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font: inherit; border: none; background: none; }
 
     /* ============================================================
-       CUSTOM CURSOR
+       CUSTOM CURSOR  (desktop only)
     ============================================================ */
-    .cursor {
-      position: fixed;
-      top: 0; left: 0;
-      width: 10px; height: 10px;
-      background: var(--color-primary);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      mix-blend-mode: screen;
-      transition: width 0.35s cubic-bezier(0.23,1,0.32,1),
-                  height 0.35s cubic-bezier(0.23,1,0.32,1);
-    }
+    .cursor,
     .cursor-ring {
       position: fixed;
       top: 0; left: 0;
-      width: 38px; height: 38px;
-      border: 1px solid rgba(0, 229, 255, 0.45);
-      border-radius: 50%;
       pointer-events: none;
-      z-index: 9998;
+      border-radius: 50%;
+      z-index: 9999;
       transform: translate(-50%, -50%);
-      transition: width 0.35s cubic-bezier(0.23,1,0.32,1),
-                  height 0.35s cubic-bezier(0.23,1,0.32,1),
-                  border-color 0.35s ease;
     }
-    .cursor.hovering  { width: 22px; height: 22px; }
-    .cursor-ring.hovering { width: 58px; height: 58px; border-color: var(--color-primary); }
+    .cursor {
+      width: 8px; height: 8px;
+      background: var(--c-gold);
+      transition: width .28s var(--ease-expo), height .28s var(--ease-expo), background .28s ease;
+    }
+    .cursor-ring {
+      width: 34px; height: 34px;
+      border: 1.5px solid rgba(196, 154, 60, 0.45);
+      z-index: 9998;
+      transition: width .32s var(--ease-expo), height .32s var(--ease-expo), border-color .3s ease;
+    }
+    .cursor.hov  { width: 18px; height: 18px; background: var(--c-gold-lt); }
+    .cursor-ring.hov { width: 50px; height: 50px; border-color: var(--c-gold); }
+
+    @media (hover: none) { .cursor, .cursor-ring { display: none; } }
 
     /* ============================================================
        NAVIGATION
     ============================================================ */
     .nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 200;
-      padding: 22px clamp(24px, 5vw, 80px);
+      inset: 0 0 auto;
+      z-index: 100;
+      height: var(--nav-h);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: background 0.5s ease, backdrop-filter 0.5s ease, padding 0.4s ease;
+      padding: 0 clamp(24px, 5vw, 72px);
+      transition: background .4s ease, box-shadow .4s ease, height .35s ease;
     }
     .nav.scrolled {
-      padding-top: 14px; padding-bottom: 14px;
-      background: rgba(6, 12, 26, 0.75);
-      backdrop-filter: var(--glass-blur);
-      -webkit-backdrop-filter: var(--glass-blur);
-      border-bottom: var(--glass-border);
+      height: 62px;
+      background: rgba(248, 247, 244, 0.93);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 1px 0 var(--c-line);
     }
 
+    /* Logo */
     .nav__logo {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-text);
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 13px;
     }
-    .nav__logo-dot {
-      width: 7px; height: 7px;
-      background: var(--color-primary);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--color-primary);
+    .nav__logo-mark {
+      width: 34px; height: 34px;
+      border: 1.5px solid var(--c-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
     }
-    .nav__logo em { font-style: normal; color: var(--color-primary); }
+    .nav__logo-mark svg {
+      width: 18px; height: 18px;
+      fill: var(--c-gold);
+    }
+    .nav__logo-copy { display: flex; flex-direction: column; gap: 2px; }
+    .nav__logo-name {
+      font-family: var(--f-serif);
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--c-text);
+      line-height: 1;
+    }
+    .nav__logo-sub {
+      font-size: .52rem;
+      font-weight: 500;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      line-height: 1;
+    }
 
+    /* Links */
     .nav__links {
       display: flex;
       list-style: none;
-      gap: 40px;
+      gap: 38px;
     }
     .nav__links a {
-      font-size: 0.72rem;
+      font-size: .68rem;
       font-weight: 500;
-      letter-spacing: 0.14em;
+      letter-spacing: .13em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      transition: color 0.3s ease;
+      color: var(--c-text-2);
       position: relative;
+      transition: color .3s ease;
     }
     .nav__links a::after {
       content: '';
       position: absolute;
-      bottom: -4px; left: 0;
-      width: 0; height: 1px;
-      background: var(--color-primary);
-      transition: width 0.3s ease;
+      bottom: -3px; left: 0;
+      height: 1px; width: 0;
+      background: var(--c-gold);
+      transition: width .38s var(--ease-expo);
     }
-    .nav__links a:hover { color: var(--color-primary); }
+    .nav__links a:hover { color: var(--c-text); }
     .nav__links a:hover::after { width: 100%; }
 
-    .nav__cta {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
+    /* CTA button */
+    .nav__btn {
+      font-size: .66rem;
+      font-weight: 600;
+      letter-spacing: .15em;
       text-transform: uppercase;
-      color: var(--color-bg);
-      background: var(--color-primary);
-      border: none;
-      padding: 11px 26px;
-      transition: box-shadow 0.35s ease, transform 0.3s ease;
-      display: inline-block;
+      color: var(--c-gold);
+      border: 1.5px solid var(--c-gold-border);
+      padding: 10px 22px;
+      transition: background .3s ease, color .3s ease, border-color .3s ease, box-shadow .3s ease;
     }
-    .nav__cta:hover {
-      box-shadow: 0 0 32px var(--color-primary-glow), 0 0 70px rgba(0,229,255,0.12);
-      transform: translateY(-1px);
+    .nav__btn:hover {
+      background: var(--c-gold);
+      color: var(--c-white);
+      border-color: var(--c-gold);
+      box-shadow: 0 4px 22px rgba(196, 154, 60, 0.32);
     }
+
+    /* Hamburger */
+    .nav__burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      width: 26px;
+    }
+    .nav__burger span {
+      height: 1.5px;
+      background: var(--c-text);
+      display: block;
+      transition: all .3s ease;
+    }
+    .nav__burger span:last-child { width: 65%; }
 
     /* ============================================================
-       HERO SECTION
+       HERO — GRID SPLIT
     ============================================================ */
     .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      min-height: 680px;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    /* Background layers */
-    .hero__bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-    .hero__bg-gradient {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 60% 80% at 75% 40%, rgba(0,229,255,0.07) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 60% at 20% 60%, rgba(0, 80, 160, 0.08) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 50% at 90% 80%, rgba(32,178,170,0.05) 0%, transparent 55%),
-        linear-gradient(165deg, #0A1128 0%, #060C1A 55%, #0A1128 100%);
-    }
-    .hero__bg-video {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      filter: saturate(0.3) brightness(0.4);
-      /* Uncomment when real video is available:
-      opacity: 0.55;
-      */
-    }
-    .hero__bg-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(10,17,40,0.9) 0%,
-        rgba(10,17,40,0.6) 50%,
-        rgba(10,17,40,0.85) 100%
-      );
-    }
-
-    /* Technical grid overlay */
-    .hero__grid {
-      position: absolute; inset: 0;
-      z-index: 1;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at center, rgba(0,0,0,0.6) 0%, transparent 75%);
-      -webkit-mask-image: radial-gradient(ellipse 80% 80% at center, rgba(0,0,0,0.6) 0%, transparent 75%);
-    }
-
-    /* Scanline sweep element */
-    .hero__scanline {
-      position: absolute;
-      top: -3px; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent 0%, var(--color-primary) 40%, rgba(0,229,255,0.8) 60%, transparent 100%);
-      z-index: 6;
-      opacity: 0;
-      box-shadow: 0 0 20px var(--color-primary), 0 0 60px rgba(0,229,255,0.2);
-    }
-
-    /* Content wrapper */
-    .hero__content {
-      position: relative;
-      z-index: 10;
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: clamp(40px, 5vw, 80px);
-      align-items: center;
-      width: min(var(--container-max), 92%);
-      margin: 0 auto;
-      padding-top: 80px;
+      grid-template-columns: var(--split) 1fr;
+      height: 100vh;
+      min-height: 700px;
+      position: relative;
     }
 
     /* ---- LEFT COLUMN ---- */
-    .hero__text {
+    .hero__left {
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      justify-content: center;
+      padding: var(--nav-h) clamp(32px, 5vw, 72px) 56px clamp(32px, 6vw, 96px);
+      position: relative;
+      z-index: 2;
     }
 
+    /* Eyebrow */
     .hero__eyebrow {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 14px;
-      font-size: 0.68rem;
+      margin-bottom: 30px;
+      opacity: 0;
+    }
+    .eyebrow__line {
+      flex: 0 0 38px;
+      height: 1px;
+      background: var(--c-gold);
+      transform-origin: left;
+      transform: scaleX(0);
+    }
+    .eyebrow__text {
+      font-size: .58rem;
       font-weight: 600;
-      letter-spacing: 0.22em;
+      letter-spacing: .26em;
       text-transform: uppercase;
-      color: var(--color-primary);
-      opacity: 0;
-      transform: translateY(12px);
-    }
-    .hero__eyebrow-line {
-      width: 36px; height: 1px;
-      background: var(--color-primary);
-      box-shadow: 0 0 8px var(--color-primary);
+      color: var(--c-gold);
     }
 
-    /* ✦ BLUR-TO-FOCUS TITLE ✦ */
-    .hero__title {
-      font-family: var(--font-display);
-      font-size: clamp(2.6rem, 5.2vw, 5rem);
-      font-weight: 800;
-      line-height: 1.04;
-      letter-spacing: -0.025em;
-      text-transform: uppercase;
-      color: var(--color-text);
-      /* Initial state — heavily blurred, invisible */
-      filter: blur(22px);
-      opacity: 0;
-      will-change: filter, opacity;
+    /* Headline — line-by-line reveal */
+    .hero__headline {
+      font-family: var(--f-serif);
+      font-size: clamp(3rem, 5.4vw, 5.1rem);
+      font-weight: 600;
+      line-height: 1.07;
+      letter-spacing: -.015em;
+      color: var(--c-text);
+      margin-bottom: 28px;
     }
-    .hero__title em {
-      font-style: normal;
-      color: var(--color-primary);
-      text-shadow: 0 0 50px rgba(0,229,255,0.35);
+    .hl {
+      display: block;
+      overflow: hidden;
     }
-    .hero__title .line { display: block; overflow: hidden; }
-
-    .hero__subtitle {
-      font-size: clamp(0.88rem, 1.2vw, 1rem);
+    .hl-in {
+      display: block;
+      transform: translateY(105%);
+    }
+    .hero__headline em {
+      font-style: italic;
       font-weight: 300;
-      line-height: 1.85;
-      color: var(--color-text-muted);
-      max-width: 460px;
+      color: var(--c-gold-dk);
+    }
+
+    /* Subtitle */
+    .hero__sub {
+      font-size: clamp(.86rem, 1.1vw, .98rem);
+      font-weight: 300;
+      line-height: 1.88;
+      color: var(--c-text-2);
+      max-width: 410px;
+      margin-bottom: 42px;
       opacity: 0;
       transform: translateY(16px);
     }
 
+    /* Actions */
     .hero__actions {
       display: flex;
       align-items: center;
       gap: 22px;
       flex-wrap: wrap;
+      margin-bottom: 52px;
       opacity: 0;
       transform: translateY(16px);
     }
 
-    /* Primary CTA */
     .btn-primary {
-      position: relative;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-bg-deep);
-      background: var(--color-primary);
-      border: none;
-      padding: 17px 38px;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      overflow: visible;
-      transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
-      isolation: isolate;
+      gap: 11px;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--c-white);
+      background: var(--c-gold);
+      padding: 16px 34px;
+      transition: background .3s ease, box-shadow .35s ease, transform .35s var(--ease-expo);
     }
-    /* Glow layer */
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      background: var(--color-primary);
-      filter: blur(16px);
-      opacity: 0;
-      z-index: -1;
-      border-radius: 2px;
-      transition: opacity 0.4s ease;
-    }
-    .btn-primary:hover::before { opacity: 0.8; }
     .btn-primary:hover {
-      box-shadow:
-        0 0 40px var(--color-primary-glow),
-        0 0 90px rgba(0,229,255,0.1),
-        inset 0 0 20px rgba(255,255,255,0.08);
-      transform: translateY(-3px);
+      background: var(--c-gold-dk);
+      box-shadow: 0 8px 32px rgba(196, 154, 60, 0.38);
+      transform: translateY(-2px);
     }
-    /* Pulse ring */
-    .btn-primary::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 2px solid var(--color-primary);
-      opacity: 0;
-      animation: btn-pulse 2.8s ease-out infinite;
-    }
-    @keyframes btn-pulse {
-      0%   { transform: scale(1);   opacity: 0.55; }
-      100% { transform: scale(1.5); opacity: 0; }
-    }
-
     .btn-arrow {
-      width: 14px; height: 14px;
-      border-top: 2px solid currentColor;
-      border-right: 2px solid currentColor;
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-top: 1.5px solid currentColor;
+      border-right: 1.5px solid currentColor;
       transform: rotate(45deg);
-      flex-shrink: 0;
-      transition: transform 0.3s ease;
+      transition: transform .3s ease;
     }
     .btn-primary:hover .btn-arrow { transform: rotate(45deg) translate(2px, -2px); }
 
-    /* Ghost CTA */
     .btn-ghost {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-size: .68rem;
+      font-weight: 400;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      background: none;
-      border: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      transition: color 0.3s ease;
+      color: var(--c-text-2);
+      border-bottom: 1px solid var(--c-line);
+      padding-bottom: 3px;
+      transition: color .3s ease, border-color .3s ease;
     }
-    .btn-ghost:hover { color: var(--color-primary); }
-    .btn-ghost__icon {
-      width: 38px; height: 38px;
-      border: 1px solid var(--color-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .btn-ghost:hover .btn-ghost__icon {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 14px var(--color-primary-glow);
-    }
+    .btn-ghost:hover { color: var(--c-gold); border-color: var(--c-gold); }
 
-    /* Hero stats bar */
-    .hero__stats {
+    /* Trust / Stats */
+    .hero__trust {
       display: flex;
-      gap: 36px;
-      padding-top: 20px;
-      border-top: 1px solid var(--color-border);
+      align-items: flex-start;
+      padding-top: 36px;
+      border-top: 1px solid var(--c-line);
       opacity: 0;
       transform: translateY(12px);
     }
-    .stat__num {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--color-primary);
+    .trust-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding-right: 24px;
+    }
+    .trust-stat + .trust-stat {
+      padding-left: 24px;
+      padding-right: 24px;
+      border-left: 1px solid var(--c-line);
+    }
+    .trust-stat:last-child { padding-right: 0; }
+
+    .trust-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 2px;
+    }
+    .trust-stars svg { width: 10px; height: 10px; fill: var(--c-gold); }
+
+    .trust-num {
+      font-family: var(--f-serif);
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--c-text);
       line-height: 1;
     }
-    .stat__label {
-      font-size: 0.65rem;
+    .trust-num sup {
+      font-size: .55em;
+      vertical-align: super;
+      font-weight: 300;
+    }
+    .trust-lbl {
+      font-size: .58rem;
       font-weight: 400;
-      letter-spacing: 0.1em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-top: 5px;
+      color: var(--c-text-3);
+      line-height: 1.4;
     }
 
-    /* ---- RIGHT COLUMN: GLASS CARD ---- */
-    .hero__card {
-      position: relative;
-      background: rgba(255, 255, 255, 0.035);
-      backdrop-filter: blur(28px) saturate(180%);
-      -webkit-backdrop-filter: blur(28px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.09);
-      border-radius: 6px;
-      padding: clamp(32px, 4vw, 52px) clamp(28px, 3.5vw, 44px);
+    /* Scroll hint */
+    .hero__scroll {
+      position: absolute;
+      bottom: 38px;
+      left: clamp(32px, 6vw, 96px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
       opacity: 0;
-      transform: translateY(28px);
+    }
+    .scroll-track {
+      width: 42px; height: 1px;
+      background: var(--c-line);
+      position: relative;
       overflow: hidden;
     }
-    /* Top shimmer */
+    .scroll-track::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--c-gold);
+      transform: translateX(-100%);
+      animation: scroll-run 2.2s ease-in-out infinite;
+    }
+    @keyframes scroll-run {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(0); }
+      100% { transform: translateX(100%); }
+    }
+    .scroll-lbl {
+      font-size: .56rem;
+      font-weight: 500;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+    }
+
+    /* Thin gold vertical rule between columns */
+    .hero__left::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 15%; bottom: 15%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--c-gold-border) 30%, var(--c-gold-border) 70%, transparent);
+    }
+
+    /* ---- RIGHT COLUMN ---- */
+    .hero__right {
+      position: relative;
+    }
+
+    /* Image area */
+    .hero__img {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      /* Warm cream gradient — replace with <img> when ready */
+      background: linear-gradient(160deg, #EDE5D6 0%, #D8C9AF 40%, #C4B090 70%, #B09A78 100%);
+    }
+    /* Soft studio-light highlight (mimics photography) */
+    .hero__img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 65% 75% at 52% 28%, rgba(255, 245, 220, 0.55) 0%, transparent 65%);
+    }
+    /* Left-edge blend into white background */
+    .hero__img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(248, 247, 244, 0.18) 0%, transparent 22%);
+      pointer-events: none;
+    }
+
+    /* Replace gradient with real photo:
+       <div class="hero__img">
+         <img src="assets/modelo-sorriso.jpg" alt="Paciente com sorriso transformado">
+       </div>
+    */
+    .hero__img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 15%;
+    }
+
+    /* Placeholder art (remove when real image is used) */
+    .img-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+    .img-placeholder__art {
+      opacity: .28;
+    }
+    .img-placeholder__art svg {
+      width: 110px; height: 140px;
+      stroke: var(--c-gold-dk);
+      fill: none;
+      stroke-width: .8;
+      stroke-linecap: round;
+    }
+    .img-placeholder__label {
+      font-family: var(--f-serif);
+      font-size: .75rem;
+      font-style: italic;
+      letter-spacing: .12em;
+      color: var(--c-gold-dk);
+      opacity: .45;
+    }
+
+    /* Gold accent tag on image — top right */
+    .hero__img-tag {
+      position: absolute;
+      top: clamp(90px, 12vh, 130px);
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(248, 247, 244, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--c-gold-border);
+      padding: 8px 14px;
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    .img-tag__dot {
+      width: 6px; height: 6px;
+      background: var(--c-gold);
+      border-radius: 50%;
+      animation: dot-pulse 2.5s ease-in-out infinite;
+    }
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: .3; transform: scale(.7); }
+    }
+    .img-tag__text {
+      font-size: .58rem;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--c-gold-dk);
+    }
+
+    /* ---- FLOATING STAT CARD ---- */
+    /* Absolute child of .hero, spans the split boundary */
+    .hero__card {
+      position: absolute;
+      left: calc(var(--split) - 32px);
+      bottom: clamp(60px, 10vh, 110px);
+      z-index: 10;
+      width: 196px;
+      background: var(--c-white);
+      border: 1px solid rgba(196, 154, 60, 0.14);
+      box-shadow:
+        0 24px 64px rgba(28, 25, 23, 0.13),
+        0 0 0 1px rgba(255,255,255,0.8);
+      padding: 22px 24px;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    /* Gold top bar */
     .hero__card::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 10%, rgba(0,229,255,0.6) 50%, transparent 90%);
+      height: 2px;
+      background: linear-gradient(to right, var(--c-gold), var(--c-gold-lt));
     }
-    /* Ambient glow inside */
-    .hero__card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 6px;
-      background: radial-gradient(ellipse 80% 60% at 80% 0%, rgba(0,229,255,0.055) 0%, transparent 65%);
-      pointer-events: none;
-    }
-
-    .card__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--color-primary-muted);
-      border: 1px solid rgba(0,229,255,0.18);
-      border-radius: 3px;
-      padding: 5px 13px;
-      margin-bottom: 26px;
-    }
-    .card__badge-dot {
-      width: 6px; height: 6px;
-      background: var(--color-primary);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--color-primary);
-      animation: blink 2.2s ease-in-out infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.2; }
-    }
-    .card__badge-text {
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-    }
-
-    .card__title {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.45;
-      color: var(--color-text);
-      margin-bottom: 20px;
-    }
-
-    .card__divider {
-      height: 1px;
-      background: var(--color-border);
-      margin: 22px 0;
-    }
-
-    .card__features { list-style: none; display: flex; flex-direction: column; gap: 15px; }
-    .card__feature {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-    }
-    .card__feature-icon {
-      width: 26px; height: 26px;
-      border: 1px solid rgba(0,229,255,0.2);
-      border-radius: 50%;
-      background: var(--color-primary-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .card__feature-icon svg {
-      width: 11px; height: 11px;
-      stroke: var(--color-primary);
-      fill: none;
-      stroke-width: 2.5;
-      stroke-linecap: round;
-    }
-
-    .card__availability {
-      margin-top: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--color-primary-muted);
-      border: 1px solid rgba(0,229,255,0.12);
-      border-radius: 4px;
-      padding: 13px 18px;
-    }
-    .card__avail-label {
-      font-size: 0.64rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-    .card__avail-value {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--color-primary);
-    }
-
-    /* Scroll indicator */
-    .hero__scroll {
-      position: absolute;
-      bottom: 36px; left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-    }
-    .hero__scroll-text {
-      font-size: 0.58rem;
+    .card-num {
+      font-family: var(--f-serif);
+      font-size: 2.2rem;
       font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-    .hero__scroll-line {
-      width: 1px; height: 54px;
-      background: linear-gradient(to bottom, var(--color-primary), transparent);
-      animation: scroll-drop 2.2s ease-in-out infinite;
-    }
-    @keyframes scroll-drop {
-      0%   { transform: scaleY(0); transform-origin: top;    opacity: 1; }
-      50%  { transform: scaleY(1); transform-origin: top;    opacity: 1; }
-      51%  { transform-origin: bottom; }
-      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
-    }
-
-    /* ============================================================
-       SHARED SECTION UTILITIES
-    ============================================================ */
-    .section {
-      padding: var(--section-pad) clamp(24px, 5vw, 80px);
-      position: relative;
-    }
-    .container {
-      max-width: var(--container-max);
-      margin: 0 auto;
-    }
-
-    .section__header {
-      text-align: center;
-      max-width: 680px;
-      margin: 0 auto clamp(56px, 8vw, 96px);
-    }
-    .section__eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 14px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      margin-bottom: 18px;
-    }
-    .section__eyebrow::before,
-    .section__eyebrow::after {
-      content: '';
-      width: 28px; height: 1px;
-      background: var(--color-primary);
-      opacity: 0.45;
-    }
-    .section__title {
-      font-family: var(--font-display);
-      font-size: clamp(1.9rem, 3.8vw, 3.2rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--color-text);
-    }
-    .section__title em { font-style: normal; color: var(--color-primary); }
-    .section__desc {
-      margin-top: 18px;
-      font-size: 0.92rem;
-      line-height: 1.85;
-      color: var(--color-text-muted);
-    }
-
-    /* ============================================================
-       TECHNOLOGY SECTION
-    ============================================================ */
-    .tech { background: var(--color-bg-deep); }
-
-    .tech__grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-    }
-    .tech__item {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      display: flex;
-      align-items: flex-end;
-      /* Initial clip — scanner reveal state */
-      clip-path: inset(0 100% 0 0);
-    }
-    .tech__item--wide {
-      grid-column: 1 / -1;
-      aspect-ratio: 21/6;
-    }
-
-    .tech__item-bg {
-      position: absolute; inset: 0;
-      background: linear-gradient(135deg, #090F23 0%, #0E1B3A 100%);
-    }
-    .tech__item:nth-child(1) .tech__item-bg { background: linear-gradient(140deg, #070D22, #0A1535 60%, #060E25); }
-    .tech__item:nth-child(2) .tech__item-bg { background: linear-gradient(220deg, #060E22, #0D1D3A 60%, #07101E); }
-    .tech__item:nth-child(3) .tech__item-bg { background: linear-gradient(160deg, #07101F, #0C1A33 40%, #060C1A); }
-
-    .tech__item-center {
-      position: absolute; inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .tech-icon {
-      width: 76px; height: 76px;
-      border: 1px solid rgba(0,229,255,0.18);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--color-primary-muted);
-      opacity: 0.7;
-    }
-    .tech-icon svg {
-      width: 32px; height: 32px;
-      stroke: var(--color-primary);
-      fill: none;
-      stroke-width: 1.4;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    /* Scan beam */
-    .tech__scan {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: -4px;
-      width: 3px;
-      background: linear-gradient(to bottom, transparent 0%, var(--color-primary) 30%, rgba(0,229,255,0.9) 50%, var(--color-primary) 70%, transparent 100%);
-      z-index: 5;
-      opacity: 0;
-      box-shadow: 0 0 18px var(--color-primary), 0 0 40px rgba(0,229,255,0.25);
-    }
-
-    .tech__item-info {
-      position: relative;
-      z-index: 2;
-      padding: clamp(24px, 3vw, 40px);
-      width: 100%;
-      background: linear-gradient(to top, rgba(6,12,26,0.96) 0%, rgba(6,12,26,0.5) 60%, transparent 100%);
-    }
-    .tech__item-tag {
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      margin-bottom: 7px;
-    }
-    .tech__item-name {
-      font-family: var(--font-display);
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      font-weight: 700;
-      color: var(--color-text);
-      line-height: 1.3;
-    }
-
-    /* ============================================================
-       SPECIALTIES SECTION
-    ============================================================ */
-    .specialties { background: var(--color-bg); }
-
-    .specialties__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .spec-card {
-      position: relative;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 4px;
-      padding: 44px 32px 38px;
-      overflow: hidden;
-      transition:
-        transform 0.45s cubic-bezier(0.23,1,0.32,1),
-        border-color 0.4s ease,
-        box-shadow 0.4s ease;
-    }
-    .spec-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0,229,255,0), transparent);
-      transition: background 0.45s ease;
-    }
-    .spec-card:hover {
-      transform: translateY(-9px);
-      border-color: rgba(0,229,255,0.22);
-      box-shadow:
-        0 24px 64px rgba(0,0,0,0.42),
-        0 0 50px rgba(0,229,255,0.04),
-        inset 0 1px 0 rgba(0,229,255,0.12);
-    }
-    .spec-card:hover::before {
-      background: linear-gradient(90deg, transparent 5%, rgba(0,229,255,0.55) 50%, transparent 95%);
-    }
-
-    .spec-card__img {
-      width: 100%;
-      height: 164px;
-      margin-bottom: 28px;
-      overflow: hidden;
-      border-radius: 3px;
-      background: linear-gradient(135deg, #0C1830, #101F40);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      transition: box-shadow 0.4s ease;
-    }
-    .spec-card:hover .spec-card__img { box-shadow: 0 0 0 1px rgba(0,229,255,0.15); }
-
-    .spec-card__svg {
-      width: 64px; height: 64px;
-      stroke: var(--color-primary);
-      fill: none;
-      stroke-width: 1;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.75;
-      transition: transform 0.55s cubic-bezier(0.23,1,0.32,1), opacity 0.4s ease;
-    }
-    .spec-card:hover .spec-card__svg { transform: scale(1.07); opacity: 0.95; }
-
-    .spec-card__num {
-      position: absolute;
-      top: 14px; right: 16px;
-      font-family: var(--font-display);
-      font-size: 2.6rem;
-      font-weight: 800;
-      color: rgba(0,229,255,0.07);
+      color: var(--c-text);
       line-height: 1;
-      user-select: none;
+      margin-bottom: 4px;
     }
-
-    .spec-card__tag {
-      display: inline-block;
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      border: 1px solid rgba(0,229,255,0.18);
-      border-radius: 2px;
-      padding: 4px 10px;
-      background: var(--color-primary-muted);
-      margin-bottom: 12px;
-    }
-    .spec-card__title {
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 1.28;
-      color: var(--color-text);
-      margin-bottom: 11px;
-    }
-    .spec-card__desc {
-      font-size: 0.8rem;
-      line-height: 1.8;
-      color: var(--color-text-muted);
-    }
-
-    .spec-card__link {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 22px;
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-primary);
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    .spec-card:hover .spec-card__link { opacity: 1; transform: translateY(0); }
-    .spec-card__link-line {
-      width: 22px; height: 1px;
-      background: var(--color-primary);
-      position: relative;
-      transition: width 0.35s ease;
-    }
-    .spec-card__link-line::after {
-      content: '';
-      position: absolute;
-      right: 0; top: -3px;
-      width: 7px; height: 7px;
-      border-top: 1px solid var(--color-primary);
-      border-right: 1px solid var(--color-primary);
-      transform: rotate(45deg);
-    }
-    .spec-card:hover .spec-card__link-line { width: 34px; }
-
-    /* ============================================================
-       BEFORE/AFTER COMPARISON SLIDER
-    ============================================================ */
-    .transformations { background: var(--color-bg-deep); }
-
-    .comparison {
-      position: relative;
-      width: min(820px, 90%);
-      margin: 0 auto;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow:
-        0 50px 100px rgba(0,0,0,0.65),
-        0 0 0 1px rgba(255,255,255,0.06);
-      user-select: none;
-      touch-action: pan-y;
-    }
-    .comparison__track {
-      position: relative;
-      aspect-ratio: 16/9;
-    }
-
-    .comp-panel {
-      position: absolute; inset: 0;
-    }
-    .comp-panel--before {
-      z-index: 1;
-      background: linear-gradient(135deg, #1C2035 0%, #282240 100%);
-    }
-    .comp-panel--after {
-      z-index: 2;
-      clip-path: inset(0 50% 0 0);
-      background: linear-gradient(135deg, #091020 0%, #0A2232 100%);
-    }
-
-    .comp-panel__inner {
-      position: absolute; inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .comp-panel__label {
-      position: absolute;
-      top: 22px;
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 7px 14px;
-      border-radius: 3px;
-    }
-    .comp-panel--before .comp-panel__label {
-      left: 22px;
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.5);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-    .comp-panel--after .comp-panel__label {
-      right: 22px;
-      background: var(--color-primary-muted);
-      color: var(--color-primary);
-      border: 1px solid rgba(0,229,255,0.28);
-    }
-
-    .comp-panel__note {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.2);
-      font-style: italic;
-    }
-    .comp-panel--after .comp-panel__note { color: rgba(0,229,255,0.35); }
-
-    /* Visual smile placeholder graphics */
-    .smile-svg { width: 130px; height: 82px; }
-
-    /* Divider */
-    .comp-divider {
-      position: absolute;
-      top: 0; bottom: 0;
-      left: 50%;
-      width: 2px;
-      background: var(--color-primary);
-      z-index: 10;
-      box-shadow: 0 0 24px var(--color-primary), 0 0 50px rgba(0,229,255,0.25);
-      cursor: col-resize;
-    }
-    .comp-handle {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 46px; height: 46px;
-      background: var(--color-primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 32px var(--color-primary-glow);
-    }
-    .comp-handle svg {
-      width: 22px; height: 22px;
-      fill: var(--color-bg-deep);
-    }
-
-    .comparison__hint {
-      text-align: center;
-      margin-top: 18px;
-      font-size: 0.68rem;
+    .card-lbl {
+      font-size: .6rem;
       font-weight: 400;
-      letter-spacing: 0.12em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      opacity: 0.6;
+      color: var(--c-text-3);
+      line-height: 1.5;
+      margin-bottom: 14px;
     }
-
-    /* Case thumbnails */
-    .comparison__thumbs {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 24px;
-      width: min(820px, 90%);
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .comp-thumb {
-      flex: 1;
-      aspect-ratio: 5/3;
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-radius: 3px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .comp-thumb.active {
-      border-color: var(--color-primary);
-      box-shadow: 0 0 22px rgba(0,229,255,0.18);
-    }
-    .comp-thumb__label {
-      position: absolute;
-      bottom: 9px; left: 12px;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-
-    /* ============================================================
-       FOOTER / CONTATO
-    ============================================================ */
-    .footer {
-      background: var(--color-bg-deep);
-      padding: var(--section-pad) clamp(24px, 5vw, 80px) 56px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Map-style background */
-    .footer__map-bg {
-      position: absolute; inset: 0;
-      background:
-        repeating-linear-gradient(0deg,   rgba(0,229,255,0.018) 0px, transparent 1px, transparent 80px),
-        repeating-linear-gradient(90deg,  rgba(0,229,255,0.018) 0px, transparent 1px, transparent 80px),
-        radial-gradient(ellipse 55% 60% at 72% 52%, rgba(0,229,255,0.025) 0%, transparent 55%);
-      opacity: 0.85;
-    }
-
-    .footer__inner {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(48px, 8vw, 100px);
-      max-width: var(--container-max);
-      margin: 0 auto;
-    }
-
-    .footer__info { display: flex; flex-direction: column; gap: 34px; }
-
-    .footer__logo {
-      font-family: var(--font-display);
-      font-size: 1.45rem;
-      font-weight: 800;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--color-text);
-    }
-    .footer__logo em { font-style: normal; color: var(--color-primary); }
-
-    .footer__address {
-      font-size: 0.84rem;
-      line-height: 2;
-      color: var(--color-text-muted);
-    }
-    .footer__address strong { color: var(--color-primary); font-weight: 600; }
-
-    .footer__hours-label {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: 12px;
-    }
-    .footer__hours {
-      font-size: 0.82rem;
-      line-height: 2;
-      color: var(--color-text-muted);
-    }
-
-    .footer__socials { display: flex; gap: 10px; }
-    .social-btn {
-      width: 40px; height: 40px;
-      border: 1px solid var(--color-border);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-text-muted);
-      background: none;
-      transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .social-btn:hover {
-      border-color: var(--color-primary);
-      color: var(--color-primary);
-      box-shadow: 0 0 16px rgba(0,229,255,0.18);
-    }
-    .social-btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-    /* Glass Contact Form */
-    .contact-glass {
-      position: relative;
-      background: rgba(255,255,255,0.028);
-      backdrop-filter: blur(22px) saturate(160%);
-      -webkit-backdrop-filter: blur(22px) saturate(160%);
-      border: 1px solid rgba(255,255,255,0.075);
-      border-radius: 6px;
-      padding: clamp(32px, 4vw, 50px) clamp(28px, 3.5vw, 42px);
-    }
-    .contact-glass::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
+    .card-divider {
       height: 1px;
-      background: linear-gradient(90deg, transparent 10%, rgba(0,229,255,0.5) 50%, transparent 90%);
+      background: var(--c-line);
+      margin-bottom: 13px;
     }
-
-    .form__title {
-      font-family: var(--font-display);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--color-text);
-      margin-bottom: 6px;
+    .card-quote {
+      font-family: var(--f-serif);
+      font-size: .78rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--c-text-2);
+      line-height: 1.55;
     }
-    .form__sub {
-      font-size: 0.8rem;
-      color: var(--color-text-muted);
-      margin-bottom: 32px;
-    }
-
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
-
-    .form-group {
-      position: relative;
-      margin-bottom: 26px;
-    }
-    .form-label {
-      display: block;
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: 9px;
-    }
-    .form-input,
-    .form-select {
-      width: 100%;
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      padding: 10px 0;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      color: var(--color-text);
-      outline: none;
-      appearance: none;
-      -webkit-appearance: none;
-      transition: border-color 0.3s ease;
-    }
-    .form-input::placeholder { color: rgba(232,237,245,0.18); }
-    .form-select option { background: var(--color-bg); color: var(--color-text); }
-
-    /* ✦ ANIMATED BOTTOM BORDER ON FOCUS ✦ */
-    .form-group::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0; height: 1px;
-      background: var(--color-primary);
-      box-shadow: 0 0 10px var(--color-primary);
-      transition: width 0.42s cubic-bezier(0.23,1,0.32,1);
-    }
-    .form-group:focus-within::after { width: 100%; }
-    .form-group:focus-within .form-input,
-    .form-group:focus-within .form-select { border-bottom-color: transparent; }
-
-    .form-submit {
-      width: 100%;
-      margin-top: 10px;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--color-bg-deep);
-      background: var(--color-primary);
-      border: none;
-      padding: 17px;
-      transition: box-shadow 0.35s ease, transform 0.3s ease;
-    }
-    .form-submit:hover {
-      box-shadow: 0 0 36px var(--color-primary-glow);
-      transform: translateY(-2px);
-    }
-
-    /* Footer bottom bar */
-    .footer__bottom {
-      position: relative;
-      z-index: 2;
-      max-width: var(--container-max);
-      margin: 56px auto 0;
-      padding-top: 28px;
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer__copy {
-      font-size: 0.7rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
-    }
-    .footer__copy em { font-style: normal; color: var(--color-primary); }
-    .footer__legal { display: flex; gap: 22px; }
-    .footer__legal a {
-      font-size: 0.7rem;
-      color: var(--color-text-muted);
-      transition: color 0.3s ease;
-    }
-    .footer__legal a:hover { color: var(--color-primary); }
 
     /* ============================================================
        RESPONSIVE
     ============================================================ */
     @media (max-width: 960px) {
-      .hero__content { grid-template-columns: 1fr; text-align: center; }
-      .hero__eyebrow { justify-content: center; }
-      .hero__subtitle { margin: 0 auto; }
-      .hero__actions { justify-content: center; }
-      .hero__stats { justify-content: center; }
-      .hero__card { display: none; }
-      .tech__grid { grid-template-columns: 1fr; }
-      .tech__item--wide { grid-column: 1; aspect-ratio: 16/6; }
-      .specialties__grid { grid-template-columns: 1fr; gap: 16px; }
-      .footer__inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero {
+        grid-template-columns: 1fr;
+        grid-template-rows: 48vh 1fr;
+        height: auto;
+        min-height: 100dvh;
+      }
+      .hero__right { grid-row: 1; }
+      .hero__left {
+        grid-row: 2;
+        padding: 36px clamp(22px, 6vw, 48px) 60px;
+        justify-content: flex-start;
+      }
+      .hero__left::after { display: none; }
+      .hero__card {
+        left: auto;
+        right: 20px;
+        bottom: auto;
+        top: calc(48vh - 130px);
+        width: 168px;
+      }
+      .hero__img-tag { top: 18px; }
+      .hero__scroll { display: none; }
       .nav__links { display: none; }
-    }
-    @media (max-width: 600px) {
-      .hero__stats { flex-wrap: wrap; gap: 22px; }
-      .form-grid { grid-template-columns: 1fr; }
+      .nav__burger { display: flex; }
     }
 
-    /* ============================================================
-       ACCESSIBILITY
-    ============================================================ */
-    .sr-only {
-      position: absolute;
-      width: 1px; height: 1px;
-      padding: 0; margin: -1px;
-      overflow: hidden;
-      clip: rect(0,0,0,0);
-      border: 0;
+    @media (max-width: 520px) {
+      .hero__headline { font-size: 2.75rem; }
+      .hero__sub { max-width: 100%; }
+      .hero__trust { flex-wrap: wrap; gap: 22px; border-top: none; padding-top: 0; }
+      .trust-stat + .trust-stat { border-left: none; padding-left: 0; }
+      .nav__btn { display: none; }
+      .hero__card { width: 148px; }
     }
+
+    /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
     }
   </style>
 </head>
@@ -1284,841 +635,314 @@
 <body>
 
   <!-- Cursor -->
-  <div class="cursor"      id="cursor"      aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing"  aria-hidden="true"></div>
+  <div class="cursor"      id="cur"  aria-hidden="true"></div>
+  <div class="cursor-ring" id="curR" aria-hidden="true"></div>
 
-  <!-- ================================================================
+  <!-- ============================================================
        NAVIGATION
-  ================================================================ -->
+  ============================================================ -->
   <header>
-    <nav class="nav" id="mainNav" aria-label="Navegação principal">
+    <nav class="nav" id="nav" aria-label="Navegação principal">
 
-      <a href="#" class="nav__logo" aria-label="DentalArte — Início">
-        <span class="nav__logo-dot" aria-hidden="true"></span>
-        DENTAL<em>ARTE</em>
+      <a href="#" class="nav__logo" aria-label="DentalArte — início">
+        <div class="nav__logo-mark" aria-hidden="true">
+          <!-- Tooth mark -->
+          <svg viewBox="0 0 20 22" aria-hidden="true">
+            <path d="M10 1C7 1 4.5 3.5 4.5 6.5c0 2 .8 3.8 2 5 .6.6 1 1.3 1.2 2.2.5 2.2.9 5 2.3 6.3 1.4-1.3 1.8-4.1 2.3-6.3.2-.9.6-1.6 1.2-2.2 1.2-1.2 2-3 2-5C15.5 3.5 13 1 10 1Z"/>
+          </svg>
+        </div>
+        <div class="nav__logo-copy">
+          <span class="nav__logo-name">DentalArte</span>
+          <span class="nav__logo-sub">Odontologia de Excelência</span>
+        </div>
       </a>
 
       <ul class="nav__links" role="list">
-        <li><a href="#tecnologia">Tecnologia</a></li>
-        <li><a href="#especialidades">Especialidades</a></li>
-        <li><a href="#transformacoes">Transformações</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#tratamentos">Tratamentos</a></li>
+        <li><a href="#resultados">Resultados</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
 
-      <a href="#contato" class="nav__cta">Agendar Avaliação</a>
+      <a href="#contato" class="nav__btn">Agendar Consulta</a>
+
+      <button class="nav__burger" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
 
     </nav>
   </header>
 
   <main>
-
-    <!-- ================================================================
-         SEÇÃO 01 — HERO: A ARTE DA SIMETRIA
-    ================================================================ -->
+    <!-- ============================================================
+         HERO
+    ============================================================ -->
     <section class="hero" id="hero" aria-labelledby="heroTitle">
 
-      <!-- Background -->
-      <div class="hero__bg" aria-hidden="true">
-        <div class="hero__bg-gradient"></div>
-        <!--
-          Para usar vídeo real:
-          <video class="hero__bg-video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
-            <source src="assets/hero.mp4" type="video/mp4">
-          </video>
-        -->
-        <div class="hero__bg-overlay"></div>
-      </div>
-      <div class="hero__grid"     aria-hidden="true"></div>
-      <div class="hero__scanline" id="heroScanline" aria-hidden="true"></div>
+      <!-- Left: editorial content -->
+      <div class="hero__left">
 
-      <!-- Content -->
-      <div class="hero__content">
-
-        <!-- Text -->
-        <div class="hero__text">
-
-          <p class="hero__eyebrow" aria-label="Odontologia de elite">
-            <span class="hero__eyebrow-line" aria-hidden="true"></span>
-            Odontologia de Elite
-          </p>
-
-          <h1 class="hero__title" id="heroTitle">
-            A <em>PRECISÃO</em><br>
-            QUE REDEFINE<br>
-            O SEU SORRISO
-          </h1>
-
-          <p class="hero__subtitle">
-            Arte cirúrgica e tecnologia de ponta convergindo para criar
-            o sorriso que sempre foi seu — esperando ser revelado com precisão.
-          </p>
-
-          <div class="hero__actions">
-            <a href="#contato" class="btn-primary" aria-label="Agendar avaliação VIP gratuita">
-              AGENDAR AVALIAÇÃO VIP
-              <span class="btn-arrow" aria-hidden="true"></span>
-            </a>
-            <a href="#especialidades" class="btn-ghost" aria-label="Conhecer especialidades">
-              <span class="btn-ghost__icon" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M6 2v8M2.5 6.5L6 10l3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </span>
-              Conhecer mais
-            </a>
-          </div>
-
-          <div class="hero__stats" aria-label="Números da clínica">
-            <div class="stat">
-              <div class="stat__num">98%</div>
-              <div class="stat__label">Satisfação</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">2.4K+</div>
-              <div class="stat__label">Sorrisos</div>
-            </div>
-            <div class="stat">
-              <div class="stat__num">14+</div>
-              <div class="stat__label">Anos</div>
-            </div>
-          </div>
-
+        <div class="hero__eyebrow" aria-label="Odontologia de excelência">
+          <span class="eyebrow__line" aria-hidden="true"></span>
+          <span class="eyebrow__text">Odontologia de Excelência</span>
         </div>
 
-        <!-- Glassmorphism Card -->
-        <aside class="hero__card" id="heroCard" aria-label="Agendamento de avaliação premium">
+        <h1 class="hero__headline" id="heroTitle">
+          <span class="hl"><span class="hl-in">A Arte de</span></span>
+          <span class="hl"><span class="hl-in">Transformar</span></span>
+          <span class="hl"><span class="hl-in"><em>o Seu Sorriso.</em></span></span>
+        </h1>
 
-          <div class="card__badge">
-            <span class="card__badge-dot" aria-hidden="true"></span>
-            <span class="card__badge-text">Vagas Disponíveis</span>
-          </div>
-
-          <h2 class="card__title">
-            Avaliação Premium<br>Sem Custo Inicial
-          </h2>
-
-          <div class="card__divider" role="separator"></div>
-
-          <ul class="card__features" aria-label="O que está incluso">
-            <li class="card__feature">
-              <span class="card__feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Scanner 3D Facial Completo
-            </li>
-            <li class="card__feature">
-              <span class="card__feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Simulação Digital do Sorriso
-            </li>
-            <li class="card__feature">
-              <span class="card__feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Plano Personalizado de Tratamento
-            </li>
-            <li class="card__feature">
-              <span class="card__feature-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              Radiografia Panorâmica Digital
-            </li>
-          </ul>
-
-          <div class="card__availability">
-            <span class="card__avail-label">Próximas vagas</span>
-            <span class="card__avail-value">Esta semana</span>
-          </div>
-
-        </aside>
-
-      </div>
-
-      <!-- Scroll indicator -->
-      <div class="hero__scroll" id="heroScroll" aria-hidden="true">
-        <span class="hero__scroll-text">Scroll</span>
-        <span class="hero__scroll-line"></span>
-      </div>
-
-    </section>
-
-    <!-- ================================================================
-         SEÇÃO 02 — TECNOLOGIA: O PADRÃO OURO
-    ================================================================ -->
-    <section class="section tech" id="tecnologia" aria-labelledby="techTitle">
-
-      <div class="container">
-        <div class="section__header">
-          <p class="section__eyebrow">O Padrão Ouro</p>
-          <h2 class="section__title" id="techTitle">
-            TECNOLOGIA QUE<br><em>ANTECIPA</em> O PERFEITO
-          </h2>
-          <p class="section__desc">
-            Equipamentos de última geração integrados a um método clínico
-            desenvolvido para cada detalhe do seu rosto, da sua oclusão
-            e da sua personalidade única.
-          </p>
-        </div>
-
-        <div class="tech__grid" aria-label="Tecnologias da clínica">
-
-          <article class="tech__item" aria-label="Scanner 3D iTero">
-            <div class="tech__item-bg" aria-hidden="true"></div>
-            <div class="tech__item-center" aria-hidden="true">
-              <div class="tech-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <circle cx="12" cy="12" r="3.5"/>
-                  <path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>
-                  <path d="M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/>
-                </svg>
-              </div>
-            </div>
-            <div class="tech__scan" aria-hidden="true"></div>
-            <div class="tech__item-info">
-              <p class="tech__item-tag">Diagnóstico Digital</p>
-              <h3 class="tech__item-name">Scanner 3D iTero</h3>
-            </div>
-          </article>
-
-          <article class="tech__item" aria-label="Tomografia Cone Beam">
-            <div class="tech__item-bg" aria-hidden="true"></div>
-            <div class="tech__item-center" aria-hidden="true">
-              <div class="tech-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="2"/>
-                  <path d="M3 9h18M9 21V9"/>
-                  <circle cx="15" cy="15" r="2"/>
-                </svg>
-              </div>
-            </div>
-            <div class="tech__scan" aria-hidden="true"></div>
-            <div class="tech__item-info">
-              <p class="tech__item-tag">Imagem Avançada</p>
-              <h3 class="tech__item-name">Tomografia Cone Beam</h3>
-            </div>
-          </article>
-
-          <article class="tech__item tech__item--wide" aria-label="CAD/CAM Cerec — Lentes em Um Dia">
-            <div class="tech__item-bg" aria-hidden="true" style="background: linear-gradient(160deg, #060C1A, #0A1A32 45%, #060E1E 100%);"></div>
-            <div class="tech__item-center" aria-hidden="true">
-              <div class="tech-icon" style="width:90px;height:90px;">
-                <svg viewBox="0 0 24 24" aria-hidden="true" style="width:40px;height:40px;">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-              </div>
-            </div>
-            <div class="tech__scan" aria-hidden="true"></div>
-            <div class="tech__item-info">
-              <p class="tech__item-tag">Fabricação Digital em Sessão Única</p>
-              <h3 class="tech__item-name">CAD/CAM Cerec — Lentes de Contato em 1 Dia</h3>
-            </div>
-          </article>
-
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ================================================================
-         SEÇÃO 03 — ESPECIALIDADES: CARDS FLUTUANTES
-    ================================================================ -->
-    <section class="section specialties" id="especialidades" aria-labelledby="specTitle">
-
-      <div class="container">
-        <div class="section__header">
-          <p class="section__eyebrow">Tratamentos Exclusivos</p>
-          <h2 class="section__title" id="specTitle">NOSSAS <em>ESPECIALIDADES</em></h2>
-          <p class="section__desc">
-            Cada procedimento é executado com materiais de grau premium e protocolos
-            desenvolvidos pelos maiores centros de pesquisa odontológica do mundo.
-          </p>
-        </div>
-
-        <div class="specialties__grid" role="list" aria-label="Especialidades odontológicas">
-
-          <!-- Card 01 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <ellipse cx="32" cy="42" rx="24" ry="14"/>
-                <path d="M8 42Q16 28 32 26Q48 28 56 42"/>
-                <path d="M18 42Q24 36 32 34Q40 36 46 42"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">01</span>
-            </div>
-            <span class="spec-card__tag">Resina Composta</span>
-            <h3 class="spec-card__title">Lentes de Contato<br>em Resina</h3>
-            <p class="spec-card__desc">
-              Transformação estética minimamente invasiva com resinas nanoparticuladas
-              de última geração. Preservação máxima do esmalte natural.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Lentes em Resina">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-          <!-- Card 02 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <path d="M16 50Q32 62 48 50Q58 42 55 26Q46 12 32 16Q18 12 9 26Q6 42 16 50Z"/>
-                <path d="M22 46Q32 54 42 46Q50 40 48 28Q42 18 32 20Q22 18 16 28Q14 40 22 46Z" opacity="0.5"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">02</span>
-            </div>
-            <span class="spec-card__tag">Cerâmica Premium</span>
-            <h3 class="spec-card__title">Lentes de Contato<br>em Porcelana</h3>
-            <p class="spec-card__desc">
-              Cerâmicas feldspáticas e e.max artesanais produzidas em laboratório
-              parceiro com mais de 30 anos de tradição em prótese de alta estética.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Lentes em Porcelana">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-          <!-- Card 03 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <line x1="32" y1="8" x2="32" y2="56"/>
-                <rect x="24" y="8" width="16" height="7" rx="2"/>
-                <path d="M27 15Q22 22 24 32Q27 38 32 40Q37 38 40 32Q42 22 37 15Z"/>
-                <line x1="25" y1="22" x2="39" y2="22"/>
-                <line x1="24" y1="28" x2="40" y2="28"/>
-                <line x1="25" y1="34" x2="39" y2="34"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">03</span>
-            </div>
-            <span class="spec-card__tag">Alta Tecnologia</span>
-            <h3 class="spec-card__title">Implantes<br>Premium</h3>
-            <p class="spec-card__desc">
-              Titânio grau 4 com superfície SLA e protocolos de carga imediata.
-              Osseointegração em tempo recorde com máxima previsibilidade clínica.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Implantes">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-          <!-- Card 04 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <ellipse cx="32" cy="30" rx="20" ry="24"/>
-                <path d="M18 42Q32 54 46 42" opacity="0.6"/>
-                <line x1="14" y1="30" x2="50" y2="30" opacity="0.3"/>
-                <line x1="32" y1="8"  x2="32" y2="52" opacity="0.3"/>
-                <circle cx="32" cy="30" r="3" fill="currentColor" stroke="none"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">04</span>
-            </div>
-            <span class="spec-card__tag">Harmonização</span>
-            <h3 class="spec-card__title">Harmonização<br>Orofacial</h3>
-            <p class="spec-card__desc">
-              Protocolo integrado que combina odontologia estética com tratamentos
-              faciais para equilíbrio, juventude e beleza natural ao rosto.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Harmonização">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-          <!-- Card 05 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <circle cx="32" cy="32" r="12"/>
-                <path d="M32 8v8M32 48v8M8 32h8M48 32h8"/>
-                <path d="M16 16l5.66 5.66M42.34 42.34L48 48M48 16l-5.66 5.66M21.66 42.34L16 48"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">05</span>
-            </div>
-            <span class="spec-card__tag">Fotoclareamento</span>
-            <h3 class="spec-card__title">Clareamento<br>a Laser</h3>
-            <p class="spec-card__desc">
-              Philips Zoom com LED-aceleração. Até 8 tons mais claro em sessão
-              única com mínima sensibilidade e resultado de longa duração.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Clareamento">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-          <!-- Card 06 -->
-          <article class="spec-card" role="listitem">
-            <div class="spec-card__img" aria-hidden="true">
-              <svg class="spec-card__svg" viewBox="0 0 64 64">
-                <path d="M12 32Q12 16 32 12Q52 16 52 32Q52 48 32 52Q12 48 12 32Z"/>
-                <path d="M20 32Q20 22 32 20Q44 22 44 32Q44 42 32 44Q20 42 20 32Z" opacity="0.5"/>
-                <path d="M24 32Q32 28 40 32Q32 36 24 32Z" opacity="0.8"/>
-              </svg>
-              <span class="spec-card__num" aria-hidden="true">06</span>
-            </div>
-            <span class="spec-card__tag">Reabilitação Total</span>
-            <h3 class="spec-card__title">Reabilitação<br>Oral Total</h3>
-            <p class="spec-card__desc">
-              Planejamento digital multidisciplinar. All-on-4 e All-on-6 com
-              entrega imediata de função mastigatória e estética definitiva.
-            </p>
-            <a href="#contato" class="spec-card__link" aria-label="Saiba mais sobre Reabilitação">
-              Saiba mais
-              <span class="spec-card__link-line" aria-hidden="true"></span>
-            </a>
-          </article>
-
-        </div>
-      </div>
-
-    </section>
-
-    <!-- ================================================================
-         SEÇÃO 04 — TRANSFORMAÇÕES: ANTES & DEPOIS
-    ================================================================ -->
-    <section class="section transformations" id="transformacoes" aria-labelledby="transTitle">
-
-      <div class="container">
-        <div class="section__header">
-          <p class="section__eyebrow">Casos Clínicos</p>
-          <h2 class="section__title" id="transTitle">ANTES &amp; <em>DEPOIS</em></h2>
-          <p class="section__desc">
-            Cada transformação é o resultado de planejamento minucioso e execução
-            impecável. Arraste a linha para revelar o resultado final.
-          </p>
-        </div>
-      </div>
-
-      <!-- Comparison Slider -->
-      <figure class="comparison" id="comparison" aria-label="Slider de comparação antes e depois — arraste para revelar o resultado">
-        <div class="comparison__track">
-
-          <!-- Before -->
-          <div class="comp-panel comp-panel--before">
-            <div class="comp-panel__inner">
-              <svg class="smile-svg" viewBox="0 0 130 82" fill="none" aria-hidden="true">
-                <ellipse cx="65" cy="58" rx="46" ry="16" stroke="rgba(200,200,200,0.28)" stroke-width="1.5"/>
-                <path d="M19 58Q34 44 65 42Q96 44 111 58" stroke="rgba(200,200,200,0.18)" stroke-width="1.5"/>
-                <rect x="32" y="42" width="13" height="17" rx="2" fill="rgba(200,200,200,0.08)" stroke="rgba(200,200,200,0.18)" stroke-width="1"/>
-                <rect x="47" y="40" width="15" height="20" rx="2" fill="rgba(200,200,200,0.08)" stroke="rgba(200,200,200,0.18)" stroke-width="1"/>
-                <rect x="64" y="40" width="15" height="20" rx="2" fill="rgba(200,200,200,0.08)" stroke="rgba(200,200,200,0.18)" stroke-width="1"/>
-                <rect x="81" y="42" width="13" height="17" rx="2" fill="rgba(200,200,200,0.08)" stroke="rgba(200,200,200,0.18)" stroke-width="1"/>
-              </svg>
-              <p class="comp-panel__note">Condição inicial</p>
-            </div>
-            <span class="comp-panel__label">ANTES</span>
-          </div>
-
-          <!-- After -->
-          <div class="comp-panel comp-panel--after" id="afterPanel">
-            <div class="comp-panel__inner">
-              <svg class="smile-svg" viewBox="0 0 130 82" fill="none" aria-hidden="true">
-                <ellipse cx="65" cy="58" rx="46" ry="16" stroke="rgba(0,229,255,0.45)" stroke-width="1.5"/>
-                <path d="M19 58Q34 44 65 42Q96 44 111 58" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"/>
-                <rect x="32" y="42" width="13" height="17" rx="2" fill="rgba(0,229,255,0.12)" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
-                <rect x="47" y="40" width="15" height="20" rx="2" fill="rgba(0,229,255,0.12)" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
-                <rect x="64" y="40" width="15" height="20" rx="2" fill="rgba(0,229,255,0.12)" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
-                <rect x="81" y="42" width="13" height="17" rx="2" fill="rgba(0,229,255,0.12)" stroke="rgba(0,229,255,0.55)" stroke-width="1"/>
-                <path d="M32 56Q65 68 98 56" stroke="rgba(0,229,255,0.18)" stroke-width="1"/>
-                <ellipse cx="65" cy="58" rx="46" ry="16" stroke="rgba(0,229,255,0.08)" stroke-width="6" filter="url(#glow)"/>
-                <defs>
-                  <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-                </defs>
-              </svg>
-              <p class="comp-panel__note">Resultado final</p>
-            </div>
-            <span class="comp-panel__label">DEPOIS</span>
-          </div>
-
-          <!-- Divider -->
-          <div class="comp-divider" id="compDivider" role="separator">
-            <div class="comp-handle" aria-label="Arraste para comparar">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 18L4 12L9 6M15 6L20 12L15 18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-              </svg>
-            </div>
-          </div>
-
-        </div>
-      </figure>
-
-      <p class="comparison__hint" aria-hidden="true">← Arraste para comparar →</p>
-
-      <!-- Thumbnails -->
-      <div class="comparison__thumbs" role="tablist" aria-label="Selecionar caso clínico">
-        <button class="comp-thumb active" role="tab" aria-selected="true"  aria-label="Caso 01 — Lentes de Porcelana"><span class="comp-thumb__label">Caso 01</span></button>
-        <button class="comp-thumb"        role="tab" aria-selected="false" aria-label="Caso 02 — Implantes Premium"><span class="comp-thumb__label">Caso 02</span></button>
-        <button class="comp-thumb"        role="tab" aria-selected="false" aria-label="Caso 03 — Harmonização"><span class="comp-thumb__label">Caso 03</span></button>
-        <button class="comp-thumb"        role="tab" aria-selected="false" aria-label="Caso 04 — Clareamento"><span class="comp-thumb__label">Caso 04</span></button>
-      </div>
-
-    </section>
-
-    <!-- ================================================================
-         SEÇÃO 05 — FOOTER: RECEPÇÃO DIGITAL
-    ================================================================ -->
-    <footer class="footer" id="contato" aria-label="Contato e rodapé">
-
-      <div class="footer__map-bg" aria-hidden="true"></div>
-
-      <div class="footer__inner">
-
-        <!-- Info -->
-        <div class="footer__info">
-
-          <div class="footer__logo">DENTAL<em>ARTE</em></div>
-
-          <address class="footer__address" style="font-style:normal;">
-            Av. Brigadeiro Faria Lima, 3.477<br>
-            Itaim Bibi — São Paulo, SP — CEP 04538-133<br><br>
-            <strong>+55 (11) 9 9999-8888</strong><br>
-            contato@dentalarte.com.br
-          </address>
-
-          <div>
-            <p class="footer__hours-label">Horário de Atendimento</p>
-            <p class="footer__hours">
-              Segunda a Sexta — 8h às 19h<br>
-              Sábado — 8h às 14h
-            </p>
-          </div>
-
-          <div class="footer__socials" aria-label="Redes sociais">
-            <button class="social-btn" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-            </button>
-            <button class="social-btn" aria-label="WhatsApp">
-              <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            </button>
-            <button class="social-btn" aria-label="YouTube">
-              <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.945-1.945C18.88 4 12 4 12 4s-6.88 0-8.595.476A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.945 1.945C5.12 20 12 20 12 20s6.88 0 8.595-.476a2.78 2.78 0 0 0 1.945-1.945A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="var(--color-bg)"/></svg>
-            </button>
-          </div>
-
-        </div>
-
-        <!-- Form -->
-        <div class="contact-glass">
-          <h2 class="form__title">Agendar Avaliação</h2>
-          <p class="form__sub">Primeira consulta gratuita. Sem compromisso.</p>
-
-          <form id="contactForm" novalidate aria-label="Formulário de agendamento">
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label" for="nome">Nome</label>
-                <input class="form-input" type="text" id="nome" name="nome" placeholder="Nome completo" autocomplete="name" required>
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="telefone">Telefone</label>
-                <input class="form-input" type="tel" id="telefone" name="telefone" placeholder="(11) 9 9999-9999" autocomplete="tel" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="email">E-mail</label>
-              <input class="form-input" type="email" id="email" name="email" placeholder="seu@email.com.br" autocomplete="email" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="tratamento">Tratamento de interesse</label>
-              <select class="form-select" id="tratamento" name="tratamento" required>
-                <option value="" disabled selected>Selecione um tratamento</option>
-                <option value="lentes-resina">Lentes de Contato em Resina</option>
-                <option value="lentes-porcelana">Lentes de Contato em Porcelana</option>
-                <option value="implantes">Implantes Premium</option>
-                <option value="harmonizacao">Harmonização Orofacial</option>
-                <option value="clareamento">Clareamento a Laser</option>
-                <option value="reabilitacao">Reabilitação Oral Total</option>
-                <option value="outro">Avaliação Geral</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label" for="mensagem">Mensagem (opcional)</label>
-              <input class="form-input" type="text" id="mensagem" name="mensagem" placeholder="Como podemos ajudar?">
-            </div>
-
-            <button type="submit" class="form-submit">
-              SOLICITAR AVALIAÇÃO GRATUITA
-            </button>
-
-          </form>
-        </div>
-
-      </div>
-
-      <!-- Bottom bar -->
-      <div class="footer__bottom">
-        <p class="footer__copy">
-          &copy; 2025 <em>DentalArte</em>. Todos os direitos reservados.
-          CRO-SP 12.345 &nbsp;|&nbsp; CNPJ 00.000.000/0001-00
+        <p class="hero__sub">
+          Tratamentos personalizados de alta precisão,
+          desenhados para revelar a versão mais confiante
+          e radiante de você.
         </p>
-        <nav class="footer__legal" aria-label="Links legais">
-          <a href="#">Privacidade</a>
-          <a href="#">Termos de Uso</a>
-          <a href="#">Acessibilidade</a>
-        </nav>
+
+        <div class="hero__actions">
+          <a href="#contato" class="btn-primary">
+            Agendar Avaliação Gratuita
+            <span class="btn-arrow" aria-hidden="true"></span>
+          </a>
+          <a href="#resultados" class="btn-ghost">Ver Transformações</a>
+        </div>
+
+        <div class="hero__trust" aria-label="Números da clínica">
+          <div class="trust-stat">
+            <div class="trust-stars" aria-label="5 estrelas">
+              <svg viewBox="0 0 10 10"><path d="M5 1l1.2 2.4 2.7.4-2 1.9.5 2.7L5 7.2 2.6 8.4l.5-2.7-2-1.9 2.7-.4z"/></svg>
+              <svg viewBox="0 0 10 10"><path d="M5 1l1.2 2.4 2.7.4-2 1.9.5 2.7L5 7.2 2.6 8.4l.5-2.7-2-1.9 2.7-.4z"/></svg>
+              <svg viewBox="0 0 10 10"><path d="M5 1l1.2 2.4 2.7.4-2 1.9.5 2.7L5 7.2 2.6 8.4l.5-2.7-2-1.9 2.7-.4z"/></svg>
+              <svg viewBox="0 0 10 10"><path d="M5 1l1.2 2.4 2.7.4-2 1.9.5 2.7L5 7.2 2.6 8.4l.5-2.7-2-1.9 2.7-.4z"/></svg>
+              <svg viewBox="0 0 10 10"><path d="M5 1l1.2 2.4 2.7.4-2 1.9.5 2.7L5 7.2 2.6 8.4l.5-2.7-2-1.9 2.7-.4z"/></svg>
+            </div>
+            <div class="trust-num" id="n1">4.9</div>
+            <div class="trust-lbl">Avaliação Google</div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-num" id="n2">2.400<sup>+</sup></div>
+            <div class="trust-lbl">Sorrisos<br>Transformados</div>
+          </div>
+          <div class="trust-stat">
+            <div class="trust-num" id="n3">14</div>
+            <div class="trust-lbl">Anos de<br>Excelência</div>
+          </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="hero__scroll" id="scrollHint" aria-hidden="true">
+          <div class="scroll-track"></div>
+          <span class="scroll-lbl">Explorar</span>
+        </div>
+
       </div>
 
-    </footer>
+      <!-- Right: image -->
+      <div class="hero__right">
 
+        <div class="hero__img" id="heroImg">
+          <!--
+            ═══════════════════════════════════════════════
+            TROCAR PELO ARQUIVO REAL:
+            <img src="assets/modelo-sorriso.jpg"
+                 alt="Paciente com sorriso transformado — DentalArte"
+                 loading="eager" fetchpriority="high">
+
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            PROMPT PARA GERAÇÃO DE IMAGEM (Midjourney / DALL-E 3):
+
+            PT: "Fotografia editorial premium de uma mulher
+            entre 28 e 38 anos sorrindo levemente, dentes
+            perfeitamente brancos e alinhados, iluminação de
+            estúdio suave com tons dourados e quentes, fundo
+            bege-creme desfocado, cabelos escuros lisos,
+            pele saudável e luminosa, expressão serena e
+            confiante, ângulo de três quartos sem olhar
+            diretamente para a câmera, estilo editorial de
+            clínica odontológica premium, lente 85 mm f/1.4,
+            ultra-realista, 4K, paleta de cores quente e
+            clean, formato retrato 2:3."
+
+            EN: "Premium editorial photography of a woman
+            aged 28–38 with a serene confident smile, perfect
+            naturally white aligned teeth, soft warm studio
+            lighting with golden tones, blurred beige-cream
+            neutral background, dark straight hair, healthy
+            luminous skin, three-quarter angle, not looking
+            directly at camera, luxury dental clinic aesthetic
+            meets high-fashion editorial, 85mm f/1.4 lens,
+            ultra-realistic photorealistic 4K, warm clean
+            color grading, portrait 2:3 ratio."
+            ═══════════════════════════════════════════════
+          -->
+          <!-- Placeholder (remove when image is ready) -->
+          <div class="img-placeholder" aria-hidden="true">
+            <div class="img-placeholder__art">
+              <svg viewBox="0 0 110 140">
+                <!-- Face oval -->
+                <ellipse cx="55" cy="60" rx="38" ry="48"/>
+                <!-- Hair top -->
+                <path d="M17 52 Q18 18 55 14 Q92 18 93 52"/>
+                <!-- Neck -->
+                <path d="M42 108 L38 134 M68 108 L72 134"/>
+                <path d="M38 134 Q55 140 72 134"/>
+                <!-- Eyes -->
+                <path d="M35 50 Q42 45 49 50 Q42 55 35 50Z"/>
+                <path d="M61 50 Q68 45 75 50 Q68 55 61 50Z"/>
+                <!-- Nose bridge subtle -->
+                <path d="M55 55 L53 72 Q55 75 57 72 L55 55"/>
+                <!-- Lips -->
+                <path d="M40 88 Q55 98 70 88"/>
+                <path d="M40 88 Q55 84 70 88"/>
+                <!-- Teeth (3 visible) -->
+                <rect x="45" y="88" width="8" height="8" rx="1.5"/>
+                <rect x="55" y="87" width="10" height="9" rx="1.5"/>
+                <rect x="67" y="88" width="8" height="8" rx="1.5"/>
+                <!-- Shoulders -->
+                <path d="M17 108 Q10 116 4 138"/>
+                <path d="M93 108 Q100 116 106 138"/>
+                <path d="M4 138 Q55 128 106 138"/>
+              </svg>
+            </div>
+            <span class="img-placeholder__label">Foto da Modelo</span>
+          </div>
+        </div>
+
+        <!-- "Avaliando" tag -->
+        <div class="hero__img-tag" id="imgTag" aria-hidden="true">
+          <span class="img-tag__dot"></span>
+          <span class="img-tag__text">Avaliações abertas</span>
+        </div>
+
+      </div>
+
+      <!-- Floating stat card (spans the split) -->
+      <aside class="hero__card" id="heroCard" aria-label="Taxa de satisfação">
+        <div class="card-num">98%</div>
+        <div class="card-lbl">Taxa de satisfação<br>dos pacientes</div>
+        <div class="card-divider"></div>
+        <p class="card-quote">"Resultado muito além do que eu esperava."</p>
+      </aside>
+
+    </section>
   </main>
 
-  <!-- ================================================================
-       SCRIPTS — Lenis + GSAP + ScrollTrigger
-  ================================================================ -->
-
-  <!-- Lenis smooth scroll -->
+  <!-- ============================================================
+       SCRIPTS
+  ============================================================ -->
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-
-  <!-- GSAP core + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script>
-  /* ================================================================
-     LENIS — SMOOTH SCROLL
-  ================================================================ */
+  /* ============================================================
+     LENIS
+  ============================================================ */
   const lenis = new Lenis({
-    duration: 1.45,
+    duration: 1.4,
     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothTouch: false,
   });
-
   gsap.ticker.add(time => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
   lenis.on('scroll', ScrollTrigger.update);
 
-  /* ================================================================
+  /* ============================================================
      CUSTOM CURSOR
-  ================================================================ */
-  const cursor     = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursorRing');
+  ============================================================ */
+  const cur  = document.getElementById('cur');
+  const curR = document.getElementById('curR');
   let mx = 0, my = 0, rx = 0, ry = 0;
 
   document.addEventListener('mousemove', e => {
-    mx = e.clientX;
-    my = e.clientY;
-    gsap.to(cursor, { x: mx, y: my, duration: 0.07, ease: 'none' });
+    mx = e.clientX; my = e.clientY;
+    gsap.to(cur, { x: mx, y: my, duration: .07, ease: 'none' });
   });
-
-  (function ringLoop() {
-    rx += (mx - rx) * 0.11;
-    ry += (my - ry) * 0.11;
-    gsap.set(cursorRing, { x: rx, y: ry });
-    requestAnimationFrame(ringLoop);
+  (function loop() {
+    rx += (mx - rx) * .1;
+    ry += (my - ry) * .1;
+    gsap.set(curR, { x: rx, y: ry });
+    requestAnimationFrame(loop);
   })();
 
-  document.querySelectorAll('a, button, .spec-card, .comp-thumb, .comparison').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.classList.add('hovering'); cursorRing.classList.add('hovering'); });
-    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); cursorRing.classList.remove('hovering'); });
+  document.querySelectorAll('a, button, .hero__card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cur.classList.add('hov'); curR.classList.add('hov'); });
+    el.addEventListener('mouseleave', () => { cur.classList.remove('hov'); curR.classList.remove('hov'); });
   });
 
-  /* ================================================================
+  /* ============================================================
      NAV SCROLL STATE
-  ================================================================ */
-  const nav = document.getElementById('mainNav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50), { passive: true });
+  ============================================================ */
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
 
-  /* ================================================================
-     HERO ANIMATIONS — BLUR TO FOCUS + STAGGER REVEAL
-  ================================================================ */
-  const heroTL = gsap.timeline({ delay: 0.2 });
+  /* ============================================================
+     HERO ENTRANCE — GSAP TIMELINE
+  ============================================================ */
+  const tl = gsap.timeline({
+    delay: .15,
+    defaults: { ease: 'power4.out' }
+  });
 
-  // 1. Scanline sweeps top → bottom
-  heroTL.fromTo('#heroScanline',
-    { top: '-3px', opacity: 1 },
-    { top: '102%', opacity: 0.4, duration: 1.1, ease: 'power2.inOut' }
-  );
+  // 1. Nav drop
+  tl.from('#nav', { y: -28, opacity: 0, duration: .9 });
 
-  // 2. Eyebrow fades in
-  heroTL.to('.hero__eyebrow', {
-    opacity: 1, y: 0, duration: 0.75, ease: 'power3.out'
-  }, '-=0.55');
+  // 2. Eyebrow fade + gold line draw
+  tl.to('.hero__eyebrow', { opacity: 1, duration: .5 }, '-=.35');
+  tl.to('.eyebrow__line', { scaleX: 1, duration: .75, ease: 'power3.inOut' }, '-=.3');
 
-  // 3. ✦ BLUR TO FOCUS — Title sharpens from fog
-  heroTL.to('#heroTitle', {
-    filter: 'blur(0px)',
-    opacity: 1,
-    duration: 1.5,
-    ease: 'power2.out',
-  }, '-=0.5');
+  // 3. Headline — line-by-line reveal
+  tl.to('.hl-in', {
+    y: 0,
+    duration: 1.05,
+    stagger: .13,
+    ease: 'power4.out'
+  }, '-=.4');
 
   // 4. Subtitle
-  heroTL.to('.hero__subtitle', {
-    opacity: 1, y: 0, duration: 0.85, ease: 'power3.out'
-  }, '-=0.9');
+  tl.to('.hero__sub', { opacity: 1, y: 0, duration: .85 }, '-=.6');
 
   // 5. CTAs
-  heroTL.to('.hero__actions', {
-    opacity: 1, y: 0, duration: 0.7, ease: 'power3.out'
-  }, '-=0.55');
+  tl.to('.hero__actions', { opacity: 1, y: 0, duration: .75 }, '-=.55');
 
-  // 6. Stats
-  heroTL.to('.hero__stats', {
-    opacity: 1, y: 0, duration: 0.65, ease: 'power3.out'
-  }, '-=0.45');
+  // 6. Trust bar
+  tl.to('.hero__trust', { opacity: 1, y: 0, duration: .7 }, '-=.5');
 
-  // 7. Glass card (parallel with subtitle)
-  heroTL.to('#heroCard', {
-    opacity: 1, y: 0, duration: 1.1, ease: 'power3.out'
-  }, '-=1.5');
+  // 7. Image (runs earlier in parallel)
+  tl.from('#heroImg', { x: 50, opacity: 0, duration: 1.15, ease: 'power3.out' }, .35);
 
-  // 8. Scroll indicator
-  heroTL.to('#heroScroll', {
-    opacity: 1, duration: 0.8, ease: 'power2.out'
-  }, '-=0.3');
+  // 8. Image tag
+  tl.to('#imgTag', { opacity: 1, y: 0, duration: .7, ease: 'back.out(1.6)' }, '-=.4');
 
-  /* ================================================================
-     SECTION HEADER REVEALS
-  ================================================================ */
-  gsap.utils.toArray('.section__header').forEach(header => {
-    gsap.from(Array.from(header.children), {
-      scrollTrigger: { trigger: header, start: 'top 82%', toggleActions: 'play none none none' },
-      opacity: 0, y: 36, stagger: 0.14, duration: 0.9, ease: 'power3.out'
-    });
-  });
+  // 9. Float card
+  tl.to('#heroCard', { opacity: 1, y: 0, duration: .8, ease: 'back.out(1.5)' }, '-=.5');
 
-  /* ================================================================
-     TECHNOLOGY — SCANNER REVEAL (clip-path + scan beam)
-  ================================================================ */
-  gsap.utils.toArray('.tech__item').forEach((item, i) => {
-    const scan = item.querySelector('.tech__scan');
-    const delay = i * 0.18;
+  // 10. Scroll hint
+  tl.to('#scrollHint', { opacity: 1, duration: .6 }, '-=.25');
 
-    const tl = gsap.timeline({
-      scrollTrigger: { trigger: item, start: 'top 78%', toggleActions: 'play none none none' }
-    });
-
-    // Panel reveals as beam sweeps left → right
-    tl.fromTo(item,
-      { clipPath: 'inset(0 100% 0 0)' },
-      { clipPath: 'inset(0 0% 0 0)', duration: 0.9, ease: 'power2.inOut', delay }
-    );
-
-    // Scan beam rides in sync
-    tl.fromTo(scan,
-      { left: '-4px', opacity: 1 },
-      { left: '105%',  opacity: 0.6, duration: 0.9, ease: 'power2.inOut' },
-      '<'
-    );
-
-    tl.to(scan, { opacity: 0, duration: 0.25 });
-  });
-
-  /* ================================================================
-     SPECIALTIES — STAGGERED CARD REVEAL
-  ================================================================ */
-  gsap.utils.toArray('.spec-card').forEach((card, i) => {
-    gsap.from(card, {
-      scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' },
-      opacity: 0, y: 48, duration: 0.85, delay: (i % 3) * 0.1, ease: 'power3.out'
-    });
-  });
-
-  /* ================================================================
-     COMPARISON SLIDER ENTRANCE
-  ================================================================ */
-  gsap.from('#comparison', {
-    scrollTrigger: { trigger: '#comparison', start: 'top 82%', toggleActions: 'play none none none' },
-    opacity: 0, y: 55, scale: 0.97, duration: 1.05, ease: 'power3.out'
-  });
-
-  /* ================================================================
-     FOOTER REVEALS
-  ================================================================ */
-  gsap.utils.toArray('.footer__info, .contact-glass').forEach(el => {
-    gsap.from(el, {
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-      opacity: 0, y: 40, duration: 0.95, ease: 'power3.out'
-    });
-  });
-
-  /* ================================================================
-     COMPARISON SLIDER — DRAG INTERACTION
-  ================================================================ */
-  (function initSlider() {
-    const slider   = document.getElementById('comparison');
-    const after    = document.getElementById('afterPanel');
-    const divider  = document.getElementById('compDivider');
-    let dragging   = false;
-    let pct        = 50;
-
-    function setPos(p) {
-      p = Math.max(2, Math.min(98, p));
-      pct = p;
-      after.style.clipPath   = `inset(0 ${100 - p}% 0 0)`;
-      divider.style.left     = `${p}%`;
+  /* ============================================================
+     PARALLAX ON SCROLL — hero image moves slower than page
+  ============================================================ */
+  gsap.to('#heroImg', {
+    yPercent: 12,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
     }
-
-    function toPercent(clientX) {
-      const r = slider.getBoundingClientRect();
-      return ((clientX - r.left) / r.width) * 100;
-    }
-
-    // Mouse
-    slider.addEventListener('mousedown', e => { dragging = true; setPos(toPercent(e.clientX)); e.preventDefault(); });
-    document.addEventListener('mousemove', e => { if (dragging) setPos(toPercent(e.clientX)); });
-    document.addEventListener('mouseup',   ()  => { dragging = false; });
-
-    // Touch
-    slider.addEventListener('touchstart', e => { dragging = true; setPos(toPercent(e.touches[0].clientX)); }, { passive: true });
-    document.addEventListener('touchmove', e => { if (dragging) setPos(toPercent(e.touches[0].clientX)); }, { passive: true });
-    document.addEventListener('touchend',  ()  => { dragging = false; });
-
-    // Animated intro: slides from 100% → 50%
-    gsap.to({ v: 100 }, {
-      v: 50,
-      duration: 1.6,
-      ease: 'power2.inOut',
-      scrollTrigger: { trigger: slider, start: 'top 80%', once: true },
-      onUpdate: function() { setPos(this.targets()[0].v); }
-    });
-  })();
-
-  /* ================================================================
-     CASE THUMBNAILS
-  ================================================================ */
-  document.querySelectorAll('.comp-thumb').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.comp-thumb').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-    });
   });
 
-  /* ================================================================
-     FORM SUBMIT
-  ================================================================ */
-  document.getElementById('contactForm').addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = 'ENVIANDO...';
-    btn.style.opacity = '0.65';
-    setTimeout(() => {
-      btn.textContent = 'AGENDAMENTO SOLICITADO ✓';
-      btn.style.opacity = '1';
-      btn.style.background = 'rgba(0, 229, 255, 0.75)';
-    }, 1100);
-  });
-
-  /* ================================================================
-     SMOOTH ANCHOR NAVIGATION
-  ================================================================ */
+  /* ============================================================
+     SMOOTH ANCHOR LINKS
+  ============================================================ */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) lenis.scrollTo(target, { offset: -72, duration: 1.7 });
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) lenis.scrollTo(t, { offset: -72, duration: 1.6 });
     });
   });
   </script>
