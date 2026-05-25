@@ -512,11 +512,13 @@
       bottom: clamp(60px, 10vh, 108px);
       z-index: 10;
       width: 196px;
-      background: var(--c-white);
-      border: 1px solid rgba(196, 154, 60, 0.14);
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      border: 1px solid rgba(196, 154, 60, 0.18);
       box-shadow:
-        0 24px 64px rgba(28, 25, 23, 0.13),
-        0 0 0 1px rgba(255,255,255,0.8);
+        0 20px 56px rgba(28, 25, 23, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
       padding: 22px 24px;
       opacity: 0;
       transform: translateY(14px);
@@ -560,6 +562,46 @@
       line-height: 1.55;
     }
 
+    /* ---- STATS STRIP (mobile only) ---- */
+    .hero__strip {
+      display: none; /* ativado apenas no mobile */
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      align-items: center;
+      justify-content: space-evenly;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(16px) saturate(130%);
+      -webkit-backdrop-filter: blur(16px) saturate(130%);
+      border-top: 1px solid rgba(196, 154, 60, 0.18);
+      z-index: 8;
+    }
+    .strip-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+    .strip-num {
+      font-family: var(--f-serif);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--c-text);
+      line-height: 1;
+    }
+    .strip-lbl {
+      font-size: .5rem;
+      font-weight: 500;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+    }
+    .strip-sep {
+      width: 1px;
+      height: 26px;
+      background: rgba(196, 154, 60, 0.22);
+    }
+
     /* ============================================================
        RESPONSIVE
     ============================================================ */
@@ -591,20 +633,11 @@
         inset: 0;
       }
 
-      /* Card: compact, dentro da área da imagem, canto inferior esquerdo */
-      .hero__card {
-        left: 16px;
-        right: auto;
-        bottom: 20px;
-        top: auto;
-        width: 152px;
-        padding: 14px 16px;
-        box-shadow: 0 12px 36px rgba(28, 25, 23, 0.18), 0 0 0 1px rgba(255,255,255,0.9);
-      }
-      .card-num  { font-size: 1.65rem; margin-bottom: 2px; }
-      .card-lbl  { font-size: .55rem; margin-bottom: 10px; }
-      .card-quote { font-size: .72rem; }
-      .card-divider { margin-bottom: 10px; }
+      /* Card: escondido no mobile, substituído pela faixa */
+      .hero__card { display: none; }
+
+      /* Faixa de stats: visível no mobile */
+      .hero__strip { display: flex; }
 
       /* Tag: esconder para não colidir com hamburger */
       .hero__img-tag { display: none; }
@@ -644,10 +677,6 @@
 
       /* Botão de agendamento no nav: esconder em telas muito pequenas */
       .nav__btn { display: none; }
-
-      /* Card menor ainda */
-      .hero__card { width: 138px; padding: 12px 14px; }
-      .card-num { font-size: 1.5rem; }
     }
 
     /* Reduced motion */
@@ -804,6 +833,24 @@
                alt="Paciente com sorriso transformado — DentalArte"
                loading="eager"
                fetchpriority="high">
+        </div>
+
+        <!-- Stats strip — mobile only -->
+        <div class="hero__strip" aria-label="Estatísticas da clínica">
+          <div class="strip-item">
+            <span class="strip-num">98%</span>
+            <span class="strip-lbl">Satisfação</span>
+          </div>
+          <span class="strip-sep" aria-hidden="true"></span>
+          <div class="strip-item">
+            <span class="strip-num">2.4K+</span>
+            <span class="strip-lbl">Sorrisos</span>
+          </div>
+          <span class="strip-sep" aria-hidden="true"></span>
+          <div class="strip-item">
+            <span class="strip-num">4.9 ★</span>
+            <span class="strip-lbl">Google</span>
+          </div>
         </div>
 
         <!-- "Avaliando" tag -->
