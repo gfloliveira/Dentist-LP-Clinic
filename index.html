@@ -551,19 +551,40 @@
       align-items: center;
       gap: 3px;
     }
-    .strip-num {
-      font-family: var(--f-serif);
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--c-text);
-      line-height: 1;
+    .strip-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(196, 154, 60, 0.1);
+      border: 1px solid rgba(196, 154, 60, 0.2);
+      margin-bottom: 6px;
+      flex-shrink: 0;
+    }
+    .strip-icon svg {
+      width: 13px; height: 13px;
+      stroke: var(--c-gold);
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .strip-lbl {
-      font-size: .5rem;
+      font-family: var(--f-serif);
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--c-text);
+      line-height: 1.1;
+      letter-spacing: .01em;
+    }
+    .strip-sub {
+      font-size: .48rem;
       font-weight: 500;
-      letter-spacing: .13em;
+      letter-spacing: .12em;
       text-transform: uppercase;
       color: var(--c-text-3);
+      margin-top: 2px;
     }
     .strip-sep {
       width: 1px;
@@ -1869,21 +1890,30 @@
                fetchpriority="high">
         </div>
 
-        <!-- Stats strip — mobile only -->
-        <div class="hero__strip" aria-label="Estatísticas da clínica">
+        <!-- Benefits strip — mobile only -->
+        <div class="hero__strip" aria-label="Benefícios da saúde bucal">
           <div class="strip-item">
-            <span class="strip-num">98%</span>
-            <span class="strip-lbl">Satisfação</span>
+            <span class="strip-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+            <span class="strip-lbl">Autoestima</span>
+            <span class="strip-sub">Elevada</span>
           </div>
           <span class="strip-sep" aria-hidden="true"></span>
           <div class="strip-item">
-            <span class="strip-num">2.4K+</span>
-            <span class="strip-lbl">Sorrisos</span>
+            <span class="strip-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2a9 9 0 0 1 9 9c0 4.17-2.84 7.67-6.7 8.68L12 22l-2.3-2.32C5.84 18.67 3 15.17 3 11a9 9 0 0 1 9-9z"/><path d="M12 6v6l3 3"/></svg>
+            </span>
+            <span class="strip-lbl">Qualidade</span>
+            <span class="strip-sub">de Vida</span>
           </div>
           <span class="strip-sep" aria-hidden="true"></span>
           <div class="strip-item">
-            <span class="strip-num">4.9 ★</span>
-            <span class="strip-lbl">Google</span>
+            <span class="strip-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+            <span class="strip-lbl">Prevenção</span>
+            <span class="strip-sub">de Doenças</span>
           </div>
         </div>
 
