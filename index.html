@@ -530,17 +530,23 @@
 
     /* ---- FLOATING STAT CARD ---- */
     /* ---- STATS STRIP (mobile only) ---- */
+    @keyframes icon-ripple {
+      0%   { box-shadow: 0 0 0 0   rgba(196,154,60,.45); }
+      70%  { box-shadow: 0 0 0 9px rgba(196,154,60,0);   }
+      100% { box-shadow: 0 0 0 0   rgba(196,154,60,0);   }
+    }
+
     .hero__strip {
       display: none; /* ativado apenas no mobile */
       position: absolute;
       bottom: 0; left: 0; right: 0;
       align-items: center;
       justify-content: space-evenly;
-      padding: 13px 16px;
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(16px) saturate(1.3);
-      -webkit-backdrop-filter: blur(16px) saturate(1.3);
-      border-top: 1px solid rgba(196, 154, 60, 0.18);
+      padding: 11px 16px;
+      background: rgba(255, 255, 255, 0.42);
+      backdrop-filter: blur(24px) saturate(1.5);
+      -webkit-backdrop-filter: blur(24px) saturate(1.5);
+      border-top: 1px solid rgba(196, 154, 60, 0.15);
       z-index: 8;
       opacity: 0;
       transform: translateY(14px);
@@ -555,12 +561,19 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30px; height: 30px;
+      width: 28px; height: 28px;
       border-radius: 50%;
-      background: rgba(196, 154, 60, 0.1);
-      border: 1px solid rgba(196, 154, 60, 0.2);
-      margin-bottom: 6px;
+      background: rgba(196, 154, 60, 0.12);
+      border: 1px solid rgba(196, 154, 60, 0.25);
+      margin-bottom: 5px;
       flex-shrink: 0;
+      animation: icon-ripple 2.8s ease-out infinite;
+    }
+    .strip-item:nth-child(1) .strip-icon { animation-delay: 0s;    }
+    .strip-item:nth-child(3) .strip-icon { animation-delay: .65s;  }
+    .strip-item:nth-child(5) .strip-icon { animation-delay: 1.3s;  }
+    @media (prefers-reduced-motion: reduce) {
+      .strip-icon { animation: none; }
     }
     .strip-icon svg {
       width: 13px; height: 13px;
