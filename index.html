@@ -466,7 +466,7 @@
     .hero__img img {
       width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center 15%;
+      object-position: center 28%;
     }
 
     /* Gold accent tag on image — top right (desktop only) */
@@ -505,63 +505,6 @@
     }
 
     /* ---- FLOATING STAT CARD ---- */
-    /* Filho de .hero__right; usa left negativo para cruzar a fronteira do split */
-    .hero__card {
-      position: absolute;
-      left: -36px;
-      bottom: clamp(60px, 10vh, 108px);
-      z-index: 10;
-      width: 196px;
-      background: rgba(255, 255, 255, 0.72);
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
-      border: 1px solid rgba(196, 154, 60, 0.18);
-      box-shadow:
-        0 20px 56px rgba(28, 25, 23, 0.1),
-        0 0 0 1px rgba(255, 255, 255, 0.6);
-      padding: 22px 24px;
-      opacity: 0;
-      transform: translateY(14px);
-    }
-    /* Gold top bar */
-    .hero__card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(to right, var(--c-gold), var(--c-gold-lt));
-    }
-    .card-num {
-      font-family: var(--f-serif);
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: var(--c-text);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .card-lbl {
-      font-size: .6rem;
-      font-weight: 400;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      line-height: 1.5;
-      margin-bottom: 14px;
-    }
-    .card-divider {
-      height: 1px;
-      background: var(--c-line);
-      margin-bottom: 13px;
-    }
-    .card-quote {
-      font-family: var(--f-serif);
-      font-size: .78rem;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--c-text-2);
-      line-height: 1.55;
-    }
-
     /* ---- STATS STRIP (mobile only) ---- */
     .hero__strip {
       display: none; /* ativado apenas no mobile */
@@ -859,14 +802,6 @@
           <span class="img-tag__text">Avaliações abertas</span>
         </div>
 
-        <!-- Card flutuante — agora filho de hero__right para posicionamento preciso -->
-        <aside class="hero__card" id="heroCard" aria-label="Taxa de satisfação">
-          <div class="card-num">98%</div>
-          <div class="card-lbl">Taxa de satisfação<br>dos pacientes</div>
-          <div class="card-divider"></div>
-          <p class="card-quote">"Resultado muito além do que eu esperava."</p>
-        </aside>
-
       </div>
 
     </section>
@@ -910,7 +845,7 @@
     requestAnimationFrame(loop);
   })();
 
-  document.querySelectorAll('a, button, .hero__card').forEach(el => {
+  document.querySelectorAll('a, button').forEach(el => {
     el.addEventListener('mouseenter', () => { cur.classList.add('hov'); curR.classList.add('hov'); });
     el.addEventListener('mouseleave', () => { cur.classList.remove('hov'); curR.classList.remove('hov'); });
   });
@@ -960,11 +895,8 @@
   // 8. Image tag
   tl.to('#imgTag', { opacity: 1, y: 0, duration: .7, ease: 'back.out(1.6)' }, '-=.4');
 
-  // 9. Float card
-  tl.to('#heroCard', { opacity: 1, y: 0, duration: .8, ease: 'back.out(1.5)' }, '-=.5');
-
-  // 10. Scroll hint
-  tl.to('#scrollHint', { opacity: 1, duration: .6 }, '-=.25');
+  // 9. Scroll hint
+  tl.to('#scrollHint', { opacity: 1, duration: .6 }, '-=.3');
 
   /* ============================================================
      PARALLAX ON SCROLL — hero image moves slower than page
