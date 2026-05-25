@@ -469,35 +469,6 @@
       object-position: center 15%;
     }
 
-    /* Placeholder art (remove when real image is used) */
-    .img-placeholder {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-    }
-    .img-placeholder__art {
-      opacity: .28;
-    }
-    .img-placeholder__art svg {
-      width: 110px; height: 140px;
-      stroke: var(--c-gold-dk);
-      fill: none;
-      stroke-width: .8;
-      stroke-linecap: round;
-    }
-    .img-placeholder__label {
-      font-family: var(--f-serif);
-      font-size: .75rem;
-      font-style: italic;
-      letter-spacing: .12em;
-      color: var(--c-gold-dk);
-      opacity: .45;
-    }
-
     /* Gold accent tag on image — top right (desktop only) */
     .hero__img-tag {
       position: absolute;
@@ -829,37 +800,10 @@
             color grading, portrait 2:3 ratio."
             ═══════════════════════════════════════════════
           -->
-          <!-- Placeholder (remove when image is ready) -->
-          <div class="img-placeholder" aria-hidden="true">
-            <div class="img-placeholder__art">
-              <svg viewBox="0 0 110 140">
-                <!-- Face oval -->
-                <ellipse cx="55" cy="60" rx="38" ry="48"/>
-                <!-- Hair top -->
-                <path d="M17 52 Q18 18 55 14 Q92 18 93 52"/>
-                <!-- Neck -->
-                <path d="M42 108 L38 134 M68 108 L72 134"/>
-                <path d="M38 134 Q55 140 72 134"/>
-                <!-- Eyes -->
-                <path d="M35 50 Q42 45 49 50 Q42 55 35 50Z"/>
-                <path d="M61 50 Q68 45 75 50 Q68 55 61 50Z"/>
-                <!-- Nose bridge subtle -->
-                <path d="M55 55 L53 72 Q55 75 57 72 L55 55"/>
-                <!-- Lips -->
-                <path d="M40 88 Q55 98 70 88"/>
-                <path d="M40 88 Q55 84 70 88"/>
-                <!-- Teeth (3 visible) -->
-                <rect x="45" y="88" width="8" height="8" rx="1.5"/>
-                <rect x="55" y="87" width="10" height="9" rx="1.5"/>
-                <rect x="67" y="88" width="8" height="8" rx="1.5"/>
-                <!-- Shoulders -->
-                <path d="M17 108 Q10 116 4 138"/>
-                <path d="M93 108 Q100 116 106 138"/>
-                <path d="M4 138 Q55 128 106 138"/>
-              </svg>
-            </div>
-            <span class="img-placeholder__label">Foto da Modelo</span>
-          </div>
+          <img src="assets/modelo-sorriso.png"
+               alt="Paciente com sorriso transformado — DentalArte"
+               loading="eager"
+               fetchpriority="high">
         </div>
 
         <!-- "Avaliando" tag -->
