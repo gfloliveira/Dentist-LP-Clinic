@@ -1761,6 +1761,127 @@
       .footer__brand { grid-column: auto; }
       .footer__bar-inner { flex-direction: column; align-items: flex-start; gap: 4px; }
     }
+
+    /* ============================================================
+       SECTION 06 — EQUIPE
+    ============================================================ */
+    .team {
+      background: var(--c-white);
+      padding: clamp(72px, 10vw, 120px) clamp(24px, 6vw, 80px);
+      border-top: 1px solid var(--c-line);
+    }
+    .team__inner { max-width: 1280px; margin: 0 auto; }
+
+    .team__header {
+      text-align: center;
+      margin-bottom: clamp(44px, 6vw, 72px);
+      opacity: 0; transform: translateY(28px);
+    }
+    .team__eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--f-sans); font-size: .72rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase; color: var(--c-gold);
+      margin-bottom: 18px;
+    }
+    .team__eyebrow-line {
+      display: inline-block; height: 1px; width: 28px;
+      background: var(--c-gold-border);
+      transform: scaleX(0); transform-origin: left;
+    }
+    .team__title {
+      font-family: var(--f-serif); font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--c-text); line-height: 1.15; margin-bottom: 14px;
+    }
+    .team__title em { font-style: italic; color: var(--c-gold); }
+    .team__desc {
+      font-size: clamp(.88rem, 1.15vw, 1rem);
+      color: var(--c-text-2); max-width: 500px; margin: 0 auto; line-height: 1.7;
+    }
+
+    .team__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(16px, 2vw, 24px);
+    }
+
+    .team__card {
+      position: relative;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--c-bg);
+      box-shadow: 0 1px 3px rgba(28,25,23,.05), 0 4px 16px rgba(28,25,23,.07);
+      transition: transform .45s var(--ease-expo), box-shadow .45s var(--ease-expo);
+      opacity: 0; transform: translateY(40px);
+    }
+    .team__card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 40px rgba(28,25,23,.14);
+    }
+    .team__card::before {
+      content: ''; position: absolute; inset: 0 0 auto 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--c-gold-dk), var(--c-gold-lt));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .5s var(--ease-expo); z-index: 2;
+    }
+    .team__card:hover::before { transform: scaleX(1); }
+
+    .team__photo {
+      aspect-ratio: 3 / 4;
+      position: relative; overflow: hidden;
+      background: linear-gradient(155deg, #EDE8DF 0%, #D4C9BB 58%, #C2B8A9 100%);
+      display: flex; align-items: flex-end; justify-content: center;
+    }
+    .team__silhouette {
+      position: absolute; bottom: 0;
+      width: 58%;
+    }
+    .team__photo-badge {
+      position: absolute; top: 12px; right: 12px; z-index: 2;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--c-gold-border);
+      border-radius: 4px; padding: 3px 10px;
+      font-family: var(--f-sans); font-size: .64rem; font-weight: 500;
+      letter-spacing: .05em; color: var(--c-text-2);
+    }
+
+    .team__info {
+      padding: 16px 18px 20px;
+      border-top: 1px solid var(--c-line);
+    }
+    .team__role {
+      font-family: var(--f-sans); font-size: .65rem; font-weight: 600;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--c-gold); margin-bottom: 5px;
+    }
+    .team__name {
+      font-family: var(--f-serif); font-weight: 400;
+      font-size: clamp(1.1rem, 1.4vw, 1.28rem);
+      color: var(--c-text); line-height: 1.2; margin-bottom: 8px;
+    }
+    .team__bio {
+      font-size: .78rem; color: var(--c-text-2);
+      line-height: 1.6; margin-bottom: 10px;
+    }
+    .team__cro {
+      font-size: .65rem; color: var(--c-text-3); letter-spacing: .04em;
+    }
+
+    @media (max-width: 1024px) {
+      .team__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 540px) {
+      .team__grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .team__photo { aspect-ratio: 2 / 3; }
+      .team__info { padding: 12px 13px 15px; }
+      .team__bio { display: none; }
+    }
+    @media (max-width: 360px) {
+      .team__grid { grid-template-columns: 1fr; }
+      .team__photo { aspect-ratio: 3 / 4; }
+    }
   </style>
 </head>
 
@@ -1793,6 +1914,7 @@
         <li><a href="#sobre">Sobre</a></li>
         <li><a href="#tratamentos">Tratamentos</a></li>
         <li><a href="#resultados">Resultados</a></li>
+        <li><a href="#equipe">Equipe</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
 
@@ -2290,6 +2412,102 @@
     </section>
 
     <!-- ============================================================
+         SECTION 06 — EQUIPE
+    ============================================================ -->
+    <section class="team" id="equipe" aria-labelledby="teamTitle">
+      <div class="team__inner">
+
+        <header class="team__header" id="teamHeader">
+          <p class="team__eyebrow">
+            <span class="team__eyebrow-line" aria-hidden="true"></span>
+            Nossa Equipe
+            <span class="team__eyebrow-line" aria-hidden="true"></span>
+          </p>
+          <h2 class="team__title" id="teamTitle">
+            Especialistas que cuidam<br>do seu <em>sorriso</em>
+          </h2>
+          <p class="team__desc">
+            Cada profissional da DentalArte combina formação de excelência
+            com sensibilidade estética para entregar resultados que transformam
+            não só o sorriso, mas a autoestima.
+          </p>
+        </header>
+
+        <div class="team__grid">
+
+          <!-- Card 1 -->
+          <article class="team__card">
+            <div class="team__photo" aria-hidden="true">
+              <svg class="team__silhouette" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" fill="rgba(196,154,60,.28)">
+                <ellipse cx="60" cy="50" rx="30" ry="34"/>
+                <path d="M0 170 C2 112 28 96 60 93 C92 96 118 112 120 170Z"/>
+              </svg>
+              <span class="team__photo-badge">CRO/SP 45.892</span>
+            </div>
+            <div class="team__info">
+              <p class="team__role">Estética &amp; Clareamento</p>
+              <h3 class="team__name">Dra. Mariana Costa</h3>
+              <p class="team__bio">Especialista em lentes de porcelana e composites. Referência em reabilitações estéticas de alta complexidade.</p>
+              <span class="team__cro">CRO/SP 45.892 · Especialista CFO</span>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="team__card">
+            <div class="team__photo" aria-hidden="true">
+              <svg class="team__silhouette" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" fill="rgba(196,154,60,.28)">
+                <ellipse cx="60" cy="50" rx="30" ry="34"/>
+                <path d="M0 170 C2 112 28 96 60 93 C92 96 118 112 120 170Z"/>
+              </svg>
+              <span class="team__photo-badge">CRO/SP 38.741</span>
+            </div>
+            <div class="team__info">
+              <p class="team__role">Implantodontia &amp; Prótese</p>
+              <h3 class="team__name">Dr. Rafael Mendes</h3>
+              <p class="team__bio">Especialista em carga imediata e reabilitações sobre implantes. Mais de 3.000 implantes realizados.</p>
+              <span class="team__cro">CRO/SP 38.741 · Mestre USP</span>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="team__card">
+            <div class="team__photo" aria-hidden="true">
+              <svg class="team__silhouette" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" fill="rgba(196,154,60,.28)">
+                <ellipse cx="60" cy="50" rx="30" ry="34"/>
+                <path d="M0 170 C2 112 28 96 60 93 C92 96 118 112 120 170Z"/>
+              </svg>
+              <span class="team__photo-badge">CRO/SP 51.203</span>
+            </div>
+            <div class="team__info">
+              <p class="team__role">Ortodontia &amp; Alinhadores</p>
+              <h3 class="team__name">Dra. Camila Torres</h3>
+              <p class="team__bio">Credenciada Invisalign Diamond e especialista em aparelhos estéticos para adultos e adolescentes.</p>
+              <span class="team__cro">CRO/SP 51.203 · Invisalign Diamond</span>
+            </div>
+          </article>
+
+          <!-- Card 4 -->
+          <article class="team__card">
+            <div class="team__photo" aria-hidden="true">
+              <svg class="team__silhouette" viewBox="0 0 120 170" xmlns="http://www.w3.org/2000/svg" fill="rgba(196,154,60,.28)">
+                <ellipse cx="60" cy="50" rx="30" ry="34"/>
+                <path d="M0 170 C2 112 28 96 60 93 C92 96 118 112 120 170Z"/>
+              </svg>
+              <span class="team__photo-badge">CRO/SP 29.876</span>
+            </div>
+            <div class="team__info">
+              <p class="team__role">Periodontia &amp; Cirurgia</p>
+              <h3 class="team__name">Dr. Thiago Barros</h3>
+              <p class="team__bio">Especialista em cirurgias plásticas periodontais e no tratamento de doenças gengivais avançadas.</p>
+              <span class="team__cro">CRO/SP 29.876 · Doutor UNICAMP</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
          SECTION 05 — CONTATO
     ============================================================ -->
     <section class="contact" id="contato" aria-labelledby="contactTitle">
@@ -2432,6 +2650,7 @@
           <li><a href="#sobre">Sobre a Clínica</a></li>
           <li><a href="#tratamentos">Especialidades</a></li>
           <li><a href="#resultados">Resultados</a></li>
+          <li><a href="#equipe">Nossa Equipe</a></li>
           <li><a href="#contato">Agendar Consulta</a></li>
         </ul>
       </nav>
@@ -2737,6 +2956,28 @@
       });
     }
   })();
+
+  /* ============================================================
+     SECTION 06 — TEAM ENTRANCE
+  ============================================================ */
+  (function () {
+    if (!document.querySelector('.team')) return;
+
+    const st6 = { trigger: '.team', start: 'top 72%', toggleActions: 'play none none none' };
+
+    gsap.to('#teamHeader', {
+      opacity: 1, y: 0, duration: .9, ease: 'power4.out',
+      scrollTrigger: st6
+    });
+    gsap.to('.team__eyebrow-line', {
+      scaleX: 1, duration: .72, ease: 'power3.inOut',
+      scrollTrigger: st6, delay: .28
+    });
+    gsap.to('.team__card', {
+      opacity: 1, y: 0, duration: .75, stagger: .13, ease: 'power3.out',
+      scrollTrigger: st6, delay: .22
+    });
+  }());
 
   /* ============================================================
      SECTION 05 — CONTACT ENTRANCE + FORM
