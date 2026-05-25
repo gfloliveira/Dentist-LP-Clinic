@@ -2505,8 +2505,8 @@
   // 9. Scroll hint
   tl.to('#scrollHint', { opacity: 1, duration: .6 }, '-=.3');
 
-  // 10. Mobile stats strip — fades up after image reveals
-  tl.to('.hero__strip', { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, '-=.2');
+  // 10. Mobile stats strip — aparece logo após a imagem revelar (t=1.0 absoluto)
+  tl.to('.hero__strip', { opacity: 1, y: 0, duration: .55, ease: 'power3.out' }, 1.0);
 
   /* ============================================================
      PARALLAX ON SCROLL — hero image moves slower than page
