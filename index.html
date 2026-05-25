@@ -542,11 +542,11 @@
       bottom: 0; left: 0; right: 0;
       align-items: center;
       justify-content: space-evenly;
-      padding: 11px 16px;
-      background: rgba(255, 255, 255, 0.42);
-      backdrop-filter: blur(24px) saturate(1.5);
-      -webkit-backdrop-filter: blur(24px) saturate(1.5);
-      border-top: 1px solid rgba(196, 154, 60, 0.15);
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.32);
+      backdrop-filter: blur(14px) saturate(1.4);
+      -webkit-backdrop-filter: blur(14px) saturate(1.4);
+      border-top: 1px solid rgba(196, 154, 60, 0.12);
       z-index: 8;
       opacity: 0;
       transform: translateY(14px);
@@ -555,53 +555,56 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 0;
     }
     .strip-icon {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 28px; height: 28px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       background: rgba(196, 154, 60, 0.12);
       border: 1px solid rgba(196, 154, 60, 0.25);
-      margin-bottom: 5px;
+      margin-bottom: 4px;
       flex-shrink: 0;
       animation: icon-ripple 2.8s ease-out infinite;
     }
-    .strip-item:nth-child(1) .strip-icon { animation-delay: 0s;    }
-    .strip-item:nth-child(3) .strip-icon { animation-delay: .65s;  }
-    .strip-item:nth-child(5) .strip-icon { animation-delay: 1.3s;  }
-    @media (prefers-reduced-motion: reduce) {
-      .strip-icon { animation: none; }
-    }
+    .strip-item:nth-child(1) .strip-icon { animation-delay: 0s;   }
+    .strip-item:nth-child(3) .strip-icon { animation-delay: .65s; }
+    .strip-item:nth-child(5) .strip-icon { animation-delay: 1.3s; }
+    @media (prefers-reduced-motion: reduce) { .strip-icon { animation: none; } }
     .strip-icon svg {
-      width: 13px; height: 13px;
+      width: 11px; height: 11px;
       stroke: var(--c-gold);
       fill: none;
       stroke-width: 1.8;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
+    /* Linha principal: "Autoestima Elevada" numa só linha serif */
     .strip-lbl {
       font-family: var(--f-serif);
-      font-size: .95rem;
+      font-size: .88rem;
       font-weight: 600;
       color: var(--c-text);
-      line-height: 1.1;
+      line-height: 1.15;
       letter-spacing: .01em;
+      white-space: nowrap;
     }
+    /* Sub em lowercase, mesma cor escura, menor */
     .strip-sub {
-      font-size: .48rem;
-      font-weight: 500;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      margin-top: 2px;
+      font-family: var(--f-serif);
+      font-size: .72rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--c-text);
+      letter-spacing: .01em;
+      line-height: 1;
+      opacity: .7;
     }
     .strip-sep {
       width: 1px;
-      height: 26px;
+      height: 20px;
       background: rgba(196, 154, 60, 0.22);
     }
 
