@@ -900,6 +900,215 @@
       .clinic__badge { display: none; }
       .clinic__frame { display: none; }
     }
+
+    /* ============================================================
+       SECTION 03 — ESPECIALIDADES
+    ============================================================ */
+    .specialties {
+      background: var(--c-bg);
+      position: relative;
+    }
+    .specialties::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-gold-border) 30%, var(--c-gold-border) 70%, transparent);
+    }
+
+    .specialties__inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: clamp(80px, 10vw, 140px) clamp(24px, 6vw, 80px) clamp(80px, 10vw, 140px);
+    }
+
+    /* ── Section header ── */
+    .specialties__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: clamp(32px, 4vw, 52px);
+      border-bottom: 1px solid var(--c-line);
+      margin-bottom: 0;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .specialties__header-left {}
+    .specialties__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .specialties__eyebrow-line {
+      display: block;
+      width: 36px;
+      height: 1.5px;
+      background: var(--c-gold);
+      transform-origin: left;
+      transform: scaleX(0);
+      flex-shrink: 0;
+    }
+    .specialties__eyebrow-text {
+      font-family: var(--f-sans);
+      font-size: .6rem;
+      font-weight: 600;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+    }
+    .specialties__title {
+      font-family: var(--f-serif);
+      font-size: clamp(2.2rem, 3.4vw, 3.6rem);
+      font-weight: 600;
+      line-height: 1.08;
+      color: var(--c-text);
+      margin: 0;
+    }
+    .specialties__title em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+    .specialties__count {
+      font-family: var(--f-serif);
+      font-size: clamp(3rem, 5vw, 5.5rem);
+      font-weight: 300;
+      color: var(--c-text-3);
+      line-height: 1;
+      letter-spacing: -.02em;
+      flex-shrink: 0;
+    }
+
+    /* ── Body: list + visual ── */
+    .specialties__body {
+      display: grid;
+      grid-template-columns: 55% 1fr;
+      gap: clamp(48px, 5vw, 80px);
+      align-items: start;
+    }
+
+    /* ── List ── */
+    .specialties__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .spec-item {
+      display: grid;
+      grid-template-columns: 52px 1fr 28px;
+      align-items: center;
+      gap: 0 20px;
+      padding: clamp(18px, 2.2vw, 26px) 0;
+      border-bottom: 1px solid var(--c-line);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: background .25s;
+    }
+    .spec-item:first-child { border-top: 1px solid var(--c-line); }
+
+    .spec-num {
+      font-family: var(--f-serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--c-text-3);
+      line-height: 1;
+      transition: color .35s var(--ease-expo);
+      align-self: start;
+      padding-top: 3px;
+    }
+    .spec-body {}
+    .spec-name {
+      font-family: var(--f-sans);
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-weight: 600;
+      color: var(--c-text);
+      letter-spacing: -.01em;
+      line-height: 1.2;
+      transition: color .35s var(--ease-expo);
+    }
+    .spec-tag {
+      font-family: var(--f-sans);
+      font-size: .74rem;
+      color: var(--c-text-3);
+      margin-top: 5px;
+      display: block;
+      line-height: 1.5;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s var(--ease-expo), opacity .3s, color .3s;
+      opacity: 0;
+    }
+    .spec-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity .35s var(--ease-expo), transform .35s var(--ease-expo);
+    }
+    .spec-arrow svg {
+      width: 16px; height: 16px;
+      stroke: var(--c-gold);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Active state */
+    .spec-item.is-active .spec-num  { color: var(--c-gold); }
+    .spec-item.is-active .spec-name { color: var(--c-gold-dk); }
+    .spec-item.is-active .spec-tag  { max-height: 3rem; opacity: 1; }
+    .spec-item.is-active .spec-arrow { opacity: 1; transform: translateX(0); }
+
+    /* ── Visual: sticky image ── */
+    .specialties__visual {
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+      height: clamp(360px, 40vw, 500px);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #E0DBD4;
+      opacity: 0;
+      transform: translateX(32px);
+    }
+    .spec-img {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .55s ease;
+    }
+    .spec-img.is-active { opacity: 1; }
+    .spec-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .specialties__body {
+        grid-template-columns: 1fr;
+      }
+      .specialties__visual {
+        position: relative;
+        top: auto;
+        height: clamp(240px, 55vw, 360px);
+        transform: none;
+        order: -1;
+      }
+      .specialties__count { font-size: 3rem; }
+    }
+    @media (max-width: 520px) {
+      .specialties__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .specialties__count { font-size: 2.4rem; }
+      .spec-item { grid-template-columns: 40px 1fr 24px; gap: 0 14px; }
+    }
   </style>
 </head>
 
@@ -1228,6 +1437,126 @@
       </div>
     </section>
 
+    <!-- ============================================================
+         SECTION 03 — ESPECIALIDADES
+    ============================================================ -->
+    <section class="specialties" id="tratamentos" aria-labelledby="specTitle">
+      <div class="specialties__inner">
+
+        <!-- Header -->
+        <div class="specialties__header" id="specHeader">
+          <div class="specialties__header-left">
+            <div class="specialties__eyebrow">
+              <span class="specialties__eyebrow-line" aria-hidden="true"></span>
+              <span class="specialties__eyebrow-text">Especialidades</span>
+            </div>
+            <h2 class="specialties__title" id="specTitle">
+              Tratamentos para<br>Cada <em>Sorriso.</em>
+            </h2>
+          </div>
+          <span class="specialties__count" aria-label="Seis especialidades">06</span>
+        </div>
+
+        <!-- Body: list + visual -->
+        <div class="specialties__body">
+
+          <!-- List -->
+          <ul class="specialties__list" id="specList" role="list">
+
+            <li class="spec-item" data-index="0">
+              <span class="spec-num">01</span>
+              <div class="spec-body">
+                <span class="spec-name">Lentes de Contato Dental</span>
+                <span class="spec-tag">Porcelana ultrafina que transforma o sorriso em até duas consultas.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+            <li class="spec-item" data-index="1">
+              <span class="spec-num">02</span>
+              <div class="spec-body">
+                <span class="spec-name">Implantes Dentários</span>
+                <span class="spec-tag">Solução permanente em titânio com aparência e função de dente natural.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+            <li class="spec-item" data-index="2">
+              <span class="spec-num">03</span>
+              <div class="spec-body">
+                <span class="spec-name">Ortodontia Invisível</span>
+                <span class="spec-tag">Alinhadores transparentes discretos, sem bráquetes ou arames.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+            <li class="spec-item" data-index="3">
+              <span class="spec-num">04</span>
+              <div class="spec-body">
+                <span class="spec-name">Clareamento a Laser</span>
+                <span class="spec-tag">Até oito tons mais claro em uma única sessão de 90 minutos.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+            <li class="spec-item" data-index="4">
+              <span class="spec-num">05</span>
+              <div class="spec-body">
+                <span class="spec-name">Reabilitação Oral</span>
+                <span class="spec-tag">Reconstrução completa da estética e função mastigatória do sorriso.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+            <li class="spec-item" data-index="5">
+              <span class="spec-num">06</span>
+              <div class="spec-body">
+                <span class="spec-name">Periodontia</span>
+                <span class="spec-tag">Saúde gengival como base de um sorriso bonito e duradouro.</span>
+              </div>
+              <span class="spec-arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </li>
+
+          </ul>
+
+          <!-- Sticky image panel -->
+          <div class="specialties__visual" id="specVisual" aria-hidden="true">
+            <div class="spec-img is-active" data-spec="0">
+              <img src="assets/esp-lentes.png"     alt="" loading="lazy">
+            </div>
+            <div class="spec-img" data-spec="1">
+              <img src="assets/esp-implantes.png"  alt="" loading="lazy">
+            </div>
+            <div class="spec-img" data-spec="2">
+              <img src="assets/esp-ortodontia.png" alt="" loading="lazy">
+            </div>
+            <div class="spec-img" data-spec="3">
+              <img src="assets/esp-clareamento.png" alt="" loading="lazy">
+            </div>
+            <div class="spec-img" data-spec="4">
+              <img src="assets/esp-reabilitacao.png" alt="" loading="lazy">
+            </div>
+            <div class="spec-img" data-spec="5">
+              <img src="assets/esp-periodontia.png" alt="" loading="lazy">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ============================================================
@@ -1375,6 +1704,67 @@
     tl2.to('#clinicImgSec',  { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, '-=.6');
     tl2.to('#clinicBadge',   { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, '-=.5');
     tl2.to('#clinicFrame',   { opacity: 1, x: 0, y: 0, duration: .85 }, '-=.65');
+  })();
+
+  /* ============================================================
+     SECTION 03 — ESPECIALIDADES ANIMATIONS + INTERACTION
+  ============================================================ */
+  (function () {
+    if (!document.querySelector('.specialties')) return;
+
+    /* ── Entrance ScrollTrigger ── */
+    const stEnter = { trigger: '.specialties', start: 'top 72%', toggleActions: 'play none none none' };
+
+    // Header
+    gsap.to('#specHeader', {
+      opacity: 1, y: 0, duration: .8, ease: 'power4.out',
+      scrollTrigger: stEnter
+    });
+    gsap.to('.specialties__eyebrow-line', {
+      scaleX: 1, duration: .72, ease: 'power3.inOut',
+      scrollTrigger: stEnter,
+      delay: .3
+    });
+
+    // List items stagger
+    gsap.to('.spec-item', {
+      opacity: 1, y: 0, duration: .65, stagger: .09, ease: 'power3.out',
+      scrollTrigger: stEnter,
+      delay: .2
+    });
+
+    // Visual panel
+    gsap.to('#specVisual', {
+      opacity: 1, x: 0, duration: 1.0, ease: 'power3.out',
+      scrollTrigger: stEnter,
+      delay: .15
+    });
+
+    /* ── Hover interaction ── */
+    const items = document.querySelectorAll('.spec-item');
+    const imgs  = document.querySelectorAll('.spec-img');
+
+    function activateSpec(index) {
+      items.forEach(el => el.classList.remove('is-active'));
+      imgs.forEach(el  => el.classList.remove('is-active'));
+      if (items[index]) items[index].classList.add('is-active');
+      if (imgs[index])  imgs[index].classList.add('is-active');
+    }
+
+    // Default: first item active
+    activateSpec(0);
+
+    items.forEach((item, i) => {
+      item.addEventListener('mouseenter', () => activateSpec(i));
+    });
+
+    // On mobile tap: toggle active
+    items.forEach((item, i) => {
+      item.addEventListener('click', () => activateSpec(i));
+    });
+
+    // Reset to first when leaving the list
+    document.getElementById('specList').addEventListener('mouseleave', () => activateSpec(0));
   })();
   </script>
 
