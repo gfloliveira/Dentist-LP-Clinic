@@ -2955,23 +2955,24 @@
   (function () {
     if (!document.querySelector('.team')) return;
 
-    const st6 = { trigger: '.team', start: 'top 85%', toggleActions: 'play none none none' };
+    const st6hdr  = { trigger: '.team',       start: 'top 85%', toggleActions: 'play none none none' };
+    const st6grid = { trigger: '.team__grid', start: 'top 90%', toggleActions: 'play none none none' };
 
     gsap.fromTo('#teamHeader',
       { opacity: 0, y: 28 },
-      { opacity: 1, y: 0, duration: .9, ease: 'power4.out', scrollTrigger: st6 }
+      { opacity: 1, y: 0, duration: .9, ease: 'power4.out', scrollTrigger: st6hdr }
     );
     gsap.fromTo('.team__eyebrow-line',
       { scaleX: 0 },
-      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: st6, delay: .28 }
+      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: st6hdr, delay: .28 }
     );
 
-    /* Cards deslizam para cima — clearProps libera o hover CSS após a animação */
+    /* Cards — trigger no grid para disparar quando os cards estão realmente na tela */
     gsap.fromTo('.team__card',
       { opacity: 0, y: 40 },
       {
         opacity: 1, y: 0, duration: .75, stagger: .13, ease: 'power3.out',
-        scrollTrigger: st6, delay: .22,
+        scrollTrigger: st6grid, delay: .08,
         clearProps: 'transform'
       }
     );
@@ -2982,7 +2983,7 @@
       {
         clipPath: 'inset(0 0 0% 0)', scale: 1.0,
         duration: 1.0, stagger: .13, ease: 'power4.out',
-        scrollTrigger: st6, delay: .46
+        scrollTrigger: st6grid, delay: .28
       }
     );
   }());
@@ -3070,13 +3071,29 @@
       if (open && lenis) lenis.stop(); else if (lenis) lenis.start();
     });
 
-    /* Close on link click or Escape */
+    /* Fechar menu + navegar ao clicar num link */
     nav.querySelectorAll('.nav__links a').forEach(a => {
-      a.addEventListener('click', () => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        /* Impede o handler global de anchor scroll (adicionado antes) de rodar
+           com lenis parado — este handler assume o controle total */
+        e.stopImmediatePropagation();
+
+        const target = document.querySelector(a.getAttribute('href'));
+
         nav.classList.remove('menu-open');
         burger.setAttribute('aria-expanded', 'false');
         burger.setAttribute('aria-label', 'Abrir menu');
-        if (lenis) lenis.start();
+
+        if (lenis) {
+          lenis.start();
+          /* rAF garante que o Lenis retomou antes de chamar scrollTo */
+          requestAnimationFrame(() => {
+            if (target) lenis.scrollTo(target, { offset: -72, duration: 1.6 });
+          });
+        } else if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
       });
     });
     document.addEventListener('keydown', e => {
