@@ -1341,12 +1341,11 @@
     .ba__line {
       position: absolute;
       top: 0; bottom: 0;
-      left: var(--ba-pos);
-      transform: translateX(-50%);
+      left: 0;
       width: 2px;
       background: rgba(255,255,255,.85);
       pointer-events: none;
-      will-change: left;
+      will-change: transform;
     }
     /* Handle */
     .ba__handle {
@@ -2998,17 +2997,41 @@
       { opacity: 1, x: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: st4, delay: .15 }
     );
 
-    /* ── Drag slider ── */
-    let active = false;
+    /* ── Drag slider (optimized) ── */
+    const baLine = document.getElementById('baLine');
+    let active      = false;
+    let baRect      = { left: 0, width: 0 };
+    let rafPending  = false;
+    let pendingX    = null;
+    let currentPct  = 50;
 
-    function setPos(clientX) {
-      const r = ba.getBoundingClientRect();
-      const pct = Math.max(6, Math.min(94, (clientX - r.left) / r.width * 100));
+    /* Cache rect on drag start + resize; init lazy after first paint so GSAP transform is settled */
+    function cacheRect() { baRect = ba.getBoundingClientRect(); }
+    window.addEventListener('resize', cacheRect, { passive: true });
+    requestAnimationFrame(() => { cacheRect(); baLine.style.transform = `translateX(${baRect.width / 2 - 1}px)`; });
+
+    /* Single rAF-throttled write — clip-path (GPU) + line transform (GPU), no layout */
+    function flushPos() {
+      rafPending = false;
+      const pct = Math.max(6, Math.min(94, (pendingX - baRect.left) / baRect.width * 100));
+      currentPct = pct;
       ba.style.setProperty('--ba-pos', pct + '%');
+      baLine.style.transform = `translateX(${pct / 100 * baRect.width - 1}px)`;
     }
 
-    ba.addEventListener('mousedown', e => { active = true; setPos(e.clientX); });
-    window.addEventListener('mousemove', e => { if (active) setPos(e.clientX); });
+    function schedulePos(clientX) {
+      pendingX = clientX;
+      if (!rafPending) { rafPending = true; requestAnimationFrame(flushPos); }
+    }
+
+    function applyKeyPct(pct) {
+      currentPct = pct;
+      ba.style.setProperty('--ba-pos', pct + '%');
+      baLine.style.transform = `translateX(${pct / 100 * baRect.width - 1}px)`;
+    }
+
+    ba.addEventListener('mousedown', e => { active = true; cacheRect(); schedulePos(e.clientX); });
+    window.addEventListener('mousemove', e => { if (active) schedulePos(e.clientX); });
     window.addEventListener('mouseup', () => { active = false; });
 
     /* Touch — only intercept horizontal swipes to not fight vertical scroll */
@@ -3016,11 +3039,12 @@
     ba.addEventListener('touchstart', e => {
       touchStartX = e.touches[0].clientX;
       touchStartY = e.touches[0].clientY;
+      cacheRect();
     }, { passive: true });
     ba.addEventListener('touchmove', e => {
       const dx = Math.abs(e.touches[0].clientX - touchStartX);
       const dy = Math.abs(e.touches[0].clientY - touchStartY);
-      if (dx > dy) { e.preventDefault(); setPos(e.touches[0].clientX); }
+      if (dx > dy) { e.preventDefault(); schedulePos(e.touches[0].clientX); }
     }, { passive: false });
 
     /* Keyboard — arrow keys on the handle */
@@ -3030,9 +3054,8 @@
       handle.setAttribute('role', 'slider');
       handle.setAttribute('aria-label', 'Comparar antes e depois — use as setas');
       handle.addEventListener('keydown', e => {
-        const cur = parseFloat(ba.style.getPropertyValue('--ba-pos') || '50');
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); ba.style.setProperty('--ba-pos', Math.max(6,  cur - 2) + '%'); }
-        if (e.key === 'ArrowRight') { e.preventDefault(); ba.style.setProperty('--ba-pos', Math.min(94, cur + 2) + '%'); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); applyKeyPct(Math.max(6,  currentPct - 2)); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); applyKeyPct(Math.min(94, currentPct + 2)); }
       });
     }
 
@@ -3068,7 +3091,10 @@
           const c = baCases[idx];
           afterImg.src  = c.after;
           beforeImg.src = c.before;
+          currentPct = 50;
           ba.style.setProperty('--ba-pos', '50%');
+          cacheRect();
+          baLine.style.transform = `translateX(${baRect.width / 2 - 1}px)`;
           active = false;
           gsap.to(ba, { opacity: 1, duration: .32, ease: 'power2.out' });
         }
