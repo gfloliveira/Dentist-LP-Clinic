@@ -2862,16 +2862,11 @@
   (function () {
     if (!document.querySelector('.clinic')) return;
 
+    /* Texto — dispara quando a seção entra na tela */
     const tl2 = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.clinic',
-        start: 'top 85%',
-        toggleActions: 'play none none none',
-      },
+      scrollTrigger: { trigger: '.clinic', start: 'top 85%', toggleActions: 'play none none none' },
       defaults: { ease: 'power4.out' }
     });
-
-    /* Left column — text elements */
     tl2.fromTo('.clinic__eyebrow',      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6 });
     tl2.fromTo('.clinic__eyebrow-line', { scaleX: 0 },         { scaleX: 1, duration: .72, ease: 'power3.inOut' }, '-=.36');
     tl2.fromTo('.clinic__title',        { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: .95 }, '-=.4');
@@ -2879,13 +2874,16 @@
     tl2.fromTo('.tech-item',            { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .65, stagger: .1 }, '-=.55');
     tl2.fromTo('.clinic__cta',          { opacity: 0 },        { opacity: 1, duration: .55 }, '-=.3');
 
-    /* Right column — slides in from right, then children reveal */
-    tl2.fromTo('#clinicImgCol',      { x: 48 },             { x: 0, duration: 1.1, ease: 'power3.out' },      0.12);
-    tl2.fromTo('#clinicImgMain img', { scale: 1.08 },       { scale: 1.0, duration: 1.4, ease: 'power3.out' }, 0.12);
-    /* Elementos secundários entram em paralelo com a imagem principal */
-    tl2.fromTo('#clinicImgSec',  { opacity: 0, y: 24 },    { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, 2.02);
-    tl2.fromTo('#clinicFrame',   { opacity: 0, x: 8, y: -8 }, { opacity: 1, x: 0, y: 0, duration: .85 },              0.58);
-    tl2.fromTo('#clinicBadge',   { opacity: 0, y: 16 },    { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, 0.82);
+    /* Coluna de imagens — trigger separado para funcionar corretamente no mobile
+       (no mobile a coluna fica abaixo do texto e só entra na tela mais tarde) */
+    const stImg = { trigger: '#clinicImgCol', start: 'top 88%', toggleActions: 'play none none none' };
+
+    const tlImg = gsap.timeline({ scrollTrigger: stImg, defaults: { ease: 'power4.out' } });
+    tlImg.fromTo('#clinicImgCol',      { x: 48 },                { x: 0, duration: 1.1, ease: 'power3.out' },          0);
+    tlImg.fromTo('#clinicImgMain img', { scale: 1.08 },          { scale: 1.0, duration: 1.4, ease: 'power3.out' },    0);
+    tlImg.fromTo('#clinicFrame',       { opacity: 0, x: 8, y: -8 }, { opacity: 1, x: 0, y: 0, duration: .85 },        0.46);
+    tlImg.fromTo('#clinicBadge',       { opacity: 0, y: 16 },    { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, 0.70);
+    tlImg.fromTo('#clinicImgSec',      { opacity: 0, y: 24 },    { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, 1.90);
   })();
 
   /* ============================================================
