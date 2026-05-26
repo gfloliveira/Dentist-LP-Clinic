@@ -1161,15 +1161,6 @@
     .spec-item.is-active .spec-tag  { max-height: 3rem; opacity: 1; }
     .spec-item.is-active .spec-arrow { opacity: 1; transform: translateX(0); }
 
-    .spec-progress {
-      display: block;
-      height: 2px;
-      background: linear-gradient(90deg, var(--c-gold-dk) 0%, var(--c-gold-lt) 100%);
-      transform-origin: left;
-      transform: scaleX(0);
-      border-radius: 1px;
-      margin-top: 7px;
-    }
 
     /* ── Visual: sticky image ── */
     .specialties__visual {
@@ -2263,7 +2254,7 @@
               <span class="spec-num">01</span>
               <div class="spec-body">
                 <span class="spec-name">Lentes de Contato Dental</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Porcelana ultrafina que transforma o sorriso em até duas consultas.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2275,7 +2266,7 @@
               <span class="spec-num">02</span>
               <div class="spec-body">
                 <span class="spec-name">Implantes Dentários</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Solução permanente em titânio com aparência e função de dente natural.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2287,7 +2278,7 @@
               <span class="spec-num">03</span>
               <div class="spec-body">
                 <span class="spec-name">Ortodontia Invisível</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Alinhadores transparentes discretos, sem bráquetes ou arames.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2299,7 +2290,7 @@
               <span class="spec-num">04</span>
               <div class="spec-body">
                 <span class="spec-name">Clareamento a Laser</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Até oito tons mais claro em uma única sessão de 90 minutos.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2311,7 +2302,7 @@
               <span class="spec-num">05</span>
               <div class="spec-body">
                 <span class="spec-name">Reabilitação Oral</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Reconstrução completa da estética e função mastigatória do sorriso.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2323,7 +2314,7 @@
               <span class="spec-num">06</span>
               <div class="spec-body">
                 <span class="spec-name">Periodontia</span>
-                <span class="spec-progress" aria-hidden="true"></span>
+
                 <span class="spec-tag">Saúde gengival como base de um sorriso bonito e duradouro.</span>
               </div>
               <span class="spec-arrow" aria-hidden="true">
@@ -2846,7 +2837,7 @@
     tl2.fromTo('#clinicImgCol',      { x: 48 },             { x: 0, duration: 1.1, ease: 'power3.out' },      0.12);
     tl2.fromTo('#clinicImgMain img', { scale: 1.08 },       { scale: 1.0, duration: 1.4, ease: 'power3.out' }, 0.12);
     /* Elementos secundários entram em paralelo com a imagem principal */
-    tl2.fromTo('#clinicImgSec',  { opacity: 0, y: 24 },    { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, 0.50);
+    tl2.fromTo('#clinicImgSec',  { opacity: 0, y: 24 },    { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, 2.02);
     tl2.fromTo('#clinicFrame',   { opacity: 0, x: 8, y: -8 }, { opacity: 1, x: 0, y: 0, duration: .85 },              0.58);
     tl2.fromTo('#clinicBadge',   { opacity: 0, y: 16 },    { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, 0.82);
   })();
@@ -2877,10 +2868,11 @@
       { opacity: 1, x: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: stEnter, delay: .15 }
     );
 
-    /* ── Carrossel automático com barra de progresso dourada ── */
+    /* ── Carrossel automático de especialidades ── */
     const items = document.querySelectorAll('.spec-item');
     const imgs  = document.querySelectorAll('.spec-img');
     const SPEC_DURATION = 2800;
+    const MANUAL_PAUSE  = 4500; // modo manual após clique do usuário
     let specTimer   = null;
     let specIndex   = 0;
     let specHovered = false;
@@ -2892,60 +2884,50 @@
       if (imgs[index])  imgs[index].classList.add('is-active');
     }
 
-    function killProgress() {
+    function scheduleNext(delay) {
       clearTimeout(specTimer);
-      items.forEach(el => {
-        const bar = el.querySelector('.spec-progress');
-        if (bar) { gsap.killTweensOf(bar); gsap.set(bar, { scaleX: 0 }); }
-      });
-    }
-
-    function startCarousel(idx) {
-      killProgress();
-      activateSpec(idx);
-      specIndex = idx;
-      const bar = items[idx]?.querySelector('.spec-progress');
-      if (bar) {
-        gsap.fromTo(bar,
-          { scaleX: 0 },
-          { scaleX: 1, duration: SPEC_DURATION / 1000, ease: 'none' }
-        );
-      }
       specTimer = setTimeout(() => {
-        if (!specHovered) startCarousel((specIndex + 1) % items.length);
-      }, SPEC_DURATION);
+        if (!specHovered) {
+          specIndex = (specIndex + 1) % items.length;
+          activateSpec(specIndex);
+          scheduleNext(SPEC_DURATION);
+        }
+      }, delay);
     }
 
-    /* Hover: pausa o carrossel */
+    /* Hover desktop: pausa o ciclo */
     items.forEach((item, i) => {
       item.addEventListener('mouseenter', () => {
         specHovered = true;
-        killProgress();
+        clearTimeout(specTimer);
         activateSpec(i);
         specIndex = i;
       });
-      /* Tap no mobile: retoma a partir do item tocado */
+      /* Clique: ativa o item e entra em modo manual por MANUAL_PAUSE ms */
       item.addEventListener('click', () => {
         specHovered = false;
-        startCarousel(i);
+        clearTimeout(specTimer);
+        activateSpec(i);
+        specIndex = i;
+        scheduleNext(MANUAL_PAUSE);
       });
     });
 
-    /* Sair da lista: retoma de onde parou */
+    /* Sair da lista: retoma o ciclo do item atual */
     document.getElementById('specList').addEventListener('mouseleave', () => {
       specHovered = false;
-      startCarousel(specIndex);
+      scheduleNext(SPEC_DURATION);
     });
 
     /* Estado inicial antes da seção entrar em tela */
     activateSpec(0);
 
-    /* Inicia o carrossel quando a seção entra em tela */
+    /* Inicia quando a seção entra em tela */
     ScrollTrigger.create({
       trigger: '.specialties',
       start: 'top 85%',
       once: true,
-      onEnter: () => setTimeout(() => startCarousel(0), 750)
+      onEnter: () => setTimeout(() => scheduleNext(SPEC_DURATION), 750)
     });
   })();
 
