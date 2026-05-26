@@ -2812,26 +2812,26 @@
     const tl2 = gsap.timeline({
       scrollTrigger: {
         trigger: '.clinic',
-        start: 'top 72%',
+        start: 'top 85%',
         toggleActions: 'play none none none',
       },
       defaults: { ease: 'power4.out' }
     });
 
     /* Left column — text elements */
-    tl2.to('.clinic__eyebrow', { opacity: 1, y: 0, duration: .6 });
-    tl2.to('.clinic__eyebrow-line', { scaleX: 1, duration: .72, ease: 'power3.inOut' }, '-=.36');
-    tl2.to('.clinic__title',  { opacity: 1, y: 0, duration: .95 }, '-=.4');
-    tl2.to('.clinic__desc',   { opacity: 1, y: 0, duration: .85 }, '-=.6');
-    tl2.to('.tech-item',      { opacity: 1, y: 0, duration: .65, stagger: .1 }, '-=.55');
-    tl2.to('.clinic__cta',    { opacity: 1, duration: .55 }, '-=.3');
+    tl2.fromTo('.clinic__eyebrow',      { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .6 });
+    tl2.fromTo('.clinic__eyebrow-line', { scaleX: 0 },         { scaleX: 1, duration: .72, ease: 'power3.inOut' }, '-=.36');
+    tl2.fromTo('.clinic__title',        { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: .95 }, '-=.4');
+    tl2.fromTo('.clinic__desc',         { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .85 }, '-=.6');
+    tl2.fromTo('.tech-item',            { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .65, stagger: .1 }, '-=.55');
+    tl2.fromTo('.clinic__cta',          { opacity: 0 },        { opacity: 1, duration: .55 }, '-=.3');
 
     /* Right column — slides in from right, then children reveal */
-    tl2.from('#clinicImgCol', { x: 48, duration: 1.1, ease: 'power3.out' }, 0.12);
-    tl2.from('#clinicImgMain img', { scale: 1.08, duration: 1.4, ease: 'power3.out' }, 0.12);
-    tl2.to('#clinicImgSec',  { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, '-=.6');
-    tl2.to('#clinicBadge',   { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, '-=.5');
-    tl2.to('#clinicFrame',   { opacity: 1, x: 0, y: 0, duration: .85 }, '-=.65');
+    tl2.fromTo('#clinicImgCol',     { x: 48 },         { x: 0, duration: 1.1, ease: 'power3.out' }, 0.12);
+    tl2.fromTo('#clinicImgMain img',{ scale: 1.08 },   { scale: 1.0, duration: 1.4, ease: 'power3.out' }, 0.12);
+    tl2.fromTo('#clinicImgSec',     { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .82, ease: 'back.out(1.4)' }, '-=.6');
+    tl2.fromTo('#clinicBadge',      { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: .72, ease: 'back.out(1.6)' }, '-=.5');
+    tl2.fromTo('#clinicFrame',      { opacity: 0, x: 8, y: -8 }, { opacity: 1, x: 0, y: 0, duration: .85 }, '-=.65');
   })();
 
   /* ============================================================
@@ -2841,32 +2841,24 @@
     if (!document.querySelector('.specialties')) return;
 
     /* ── Entrance ScrollTrigger ── */
-    const stEnter = { trigger: '.specialties', start: 'top 72%', toggleActions: 'play none none none' };
+    const stEnter = { trigger: '.specialties', start: 'top 85%', toggleActions: 'play none none none' };
 
-    // Header
-    gsap.to('#specHeader', {
-      opacity: 1, y: 0, duration: .8, ease: 'power4.out',
-      scrollTrigger: stEnter
-    });
-    gsap.to('.specialties__eyebrow-line', {
-      scaleX: 1, duration: .72, ease: 'power3.inOut',
-      scrollTrigger: stEnter,
-      delay: .3
-    });
-
-    // List items stagger
-    gsap.to('.spec-item', {
-      opacity: 1, y: 0, duration: .65, stagger: .09, ease: 'power3.out',
-      scrollTrigger: stEnter,
-      delay: .2
-    });
-
-    // Visual panel
-    gsap.to('#specVisual', {
-      opacity: 1, x: 0, duration: 1.0, ease: 'power3.out',
-      scrollTrigger: stEnter,
-      delay: .15
-    });
+    gsap.fromTo('#specHeader',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: .8, ease: 'power4.out', scrollTrigger: stEnter }
+    );
+    gsap.fromTo('.specialties__eyebrow-line',
+      { scaleX: 0 },
+      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: stEnter, delay: .3 }
+    );
+    gsap.fromTo('.spec-item',
+      { opacity: 0, y: 22 },
+      { opacity: 1, y: 0, duration: .65, stagger: .09, ease: 'power3.out', scrollTrigger: stEnter, delay: .2 }
+    );
+    gsap.fromTo('#specVisual',
+      { opacity: 0, x: 32 },
+      { opacity: 1, x: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: stEnter, delay: .15 }
+    );
 
     /* ── Hover interaction ── */
     const items = document.querySelectorAll('.spec-item');
@@ -2903,20 +2895,20 @@
     if (!ba) return;
 
     /* ── Entrance ── */
-    const st4 = { trigger: '.results', start: 'top 72%', toggleActions: 'play none none none' };
+    const st4 = { trigger: '.results', start: 'top 85%', toggleActions: 'play none none none' };
 
-    gsap.to('#resLeft', {
-      opacity: 1, y: 0, duration: .85, ease: 'power4.out',
-      scrollTrigger: st4
-    });
-    gsap.to('.results__eyebrow-line', {
-      scaleX: 1, duration: .72, ease: 'power3.inOut',
-      scrollTrigger: st4, delay: .3
-    });
-    gsap.to('#baWrap', {
-      opacity: 1, x: 0, duration: 1.0, ease: 'power3.out',
-      scrollTrigger: st4, delay: .15
-    });
+    gsap.fromTo('#resLeft',
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .85, ease: 'power4.out', scrollTrigger: st4 }
+    );
+    gsap.fromTo('.results__eyebrow-line',
+      { scaleX: 0 },
+      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: st4, delay: .3 }
+    );
+    gsap.fromTo('#baWrap',
+      { opacity: 0, x: 32 },
+      { opacity: 1, x: 0, duration: 1.0, ease: 'power3.out', scrollTrigger: st4, delay: .15 }
+    );
 
     /* ── Drag slider ── */
     let active = false;
@@ -2963,22 +2955,26 @@
   (function () {
     if (!document.querySelector('.team')) return;
 
-    const st6 = { trigger: '.team', start: 'top 72%', toggleActions: 'play none none none' };
+    const st6 = { trigger: '.team', start: 'top 85%', toggleActions: 'play none none none' };
 
-    gsap.to('#teamHeader', {
-      opacity: 1, y: 0, duration: .9, ease: 'power4.out',
-      scrollTrigger: st6
-    });
-    gsap.to('.team__eyebrow-line', {
-      scaleX: 1, duration: .72, ease: 'power3.inOut',
-      scrollTrigger: st6, delay: .28
-    });
+    gsap.fromTo('#teamHeader',
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: .9, ease: 'power4.out', scrollTrigger: st6 }
+    );
+    gsap.fromTo('.team__eyebrow-line',
+      { scaleX: 0 },
+      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: st6, delay: .28 }
+    );
 
-    /* Cards deslizam para cima */
-    gsap.to('.team__card', {
-      opacity: 1, y: 0, duration: .75, stagger: .13, ease: 'power3.out',
-      scrollTrigger: st6, delay: .22
-    });
+    /* Cards deslizam para cima — clearProps libera o hover CSS após a animação */
+    gsap.fromTo('.team__card',
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1, y: 0, duration: .75, stagger: .13, ease: 'power3.out',
+        scrollTrigger: st6, delay: .22,
+        clearProps: 'transform'
+      }
+    );
 
     /* Fotos: cortina de baixo para cima + zoom-out suave */
     gsap.fromTo('.team__photo img',
@@ -2997,24 +2993,24 @@
   (function () {
     if (!document.querySelector('.contact')) return;
 
-    const st5 = { trigger: '.contact', start: 'top 72%', toggleActions: 'play none none none' };
+    const st5 = { trigger: '.contact', start: 'top 85%', toggleActions: 'play none none none' };
 
-    gsap.to('#contactLeft', {
-      opacity: 1, y: 0, duration: .9, ease: 'power4.out',
-      scrollTrigger: st5
-    });
-    gsap.to('.contact__eyebrow-line', {
-      scaleX: 1, duration: .72, ease: 'power3.inOut',
-      scrollTrigger: st5, delay: .35
-    });
-    gsap.to('#contactRight', {
-      opacity: 1, y: 0, duration: .9, ease: 'power4.out',
-      scrollTrigger: st5, delay: .18
-    });
-    gsap.from('.form-field', {
-      opacity: 0, y: 16, duration: .55, stagger: .08, ease: 'power3.out',
-      scrollTrigger: st5, delay: .35
-    });
+    gsap.fromTo('#contactLeft',
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: .9, ease: 'power4.out', scrollTrigger: st5 }
+    );
+    gsap.fromTo('.contact__eyebrow-line',
+      { scaleX: 0 },
+      { scaleX: 1, duration: .72, ease: 'power3.inOut', scrollTrigger: st5, delay: .35 }
+    );
+    gsap.fromTo('#contactRight',
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: .9, ease: 'power4.out', scrollTrigger: st5, delay: .18 }
+    );
+    gsap.fromTo('.form-field',
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: .55, stagger: .08, ease: 'power3.out', scrollTrigger: st5, delay: .35 }
+    );
 
     /* Select "chosen" class for color change */
     document.getElementById('fSpec').addEventListener('change', function () {
