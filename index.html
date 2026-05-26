@@ -1917,6 +1917,64 @@
       .team__grid { grid-template-columns: 1fr; }
       .team__photo { aspect-ratio: 3 / 4; }
     }
+
+    /* ============================================================
+       TABLET — iPad portrait e landscape
+       Faixas específicas para não alterar mobile (≤960px) nem
+       desktop (>1100px)
+    ============================================================ */
+
+    /* ── iPad portrait: 768px – 960px ──────────────────────────────
+       Usa o layout mobile (coluna única), mas com proporções
+       ajustadas para a tela maior do tablet.
+    ─────────────────────────────────────────────────────────────── */
+    @media (min-width: 768px) and (max-width: 960px) {
+      /* Hero: linha de imagem menor → mais espaço para o conteúdo */
+      .hero { grid-template-rows: 42vh 1fr; }
+
+      /* Clinic: coluna de imagens um pouco mais alta no tablet */
+      .clinic__right { height: clamp(400px, 60vw, 520px); }
+
+      /* Before/After: 4/5 gera ~850px de altura num iPad portrait
+         (quase um viewport inteiro). Voltamos para 4/3 ≈ 570px. */
+      .ba { aspect-ratio: 4 / 3; }
+
+      /* Especialidades: visual ligeiramente maior */
+      .specialties__visual { height: clamp(280px, 52vw, 400px); }
+
+      /* Equipe: 2 colunas espaçadas no tablet portrait */
+      .team__grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+      .team__bio { display: block; }
+    }
+
+    /* ── iPad landscape + desktop estreito: 961px – 1100px ─────────
+       Recebe o layout desktop (>960px), mas projetado para ≥1200px.
+       Pequenos ajustes de proporção para não comprimir o conteúdo.
+    ─────────────────────────────────────────────────────────────── */
+    @media (min-width: 961px) and (max-width: 1100px) {
+      /* Hero: split 53/47 fica apertado; abrimos ligeiramente */
+      .hero { --split: 49%; }
+      .hero__headline { font-size: clamp(2.8rem, 4.4vw, 4rem); }
+
+      /* Nav: gap menor entre links para caber sem aperto */
+      .nav__links { gap: 22px; }
+      .nav__links a { font-size: .64rem; }
+
+      /* Clinic: equilibra as colunas e reduz gap */
+      .clinic__inner {
+        grid-template-columns: 46% 1fr;
+        gap: clamp(32px, 4vw, 60px);
+      }
+
+      /* Specialties: visual ocupa menos para não cortar */
+      .spec-img-wrap { max-width: 420px; }
+
+      /* Contact: gap menor */
+      .contact__inner { gap: clamp(36px, 4.5vw, 68px); }
+
+      /* Results: colunas mais equilibradas nessa faixa */
+      .results__inner { grid-template-columns: 1fr 1.25fr; gap: clamp(40px, 4.5vw, 72px); }
+    }
   </style>
 </head>
 
