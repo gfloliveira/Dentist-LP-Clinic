@@ -1335,7 +1335,7 @@
       will-change: clip-path;
     }
     .ba__before img {
-      filter: grayscale(0.2) sepia(0.38) saturate(0.72) brightness(0.84) contrast(1.1);
+      /* sem filtros — a foto antes/depois já é autoexplicativa */
     }
     /* Divider line */
     .ba__line {
@@ -3049,6 +3049,10 @@
     const beforeImg = document.getElementById('baBeforeImg');
     const baTabs    = document.querySelectorAll('.ba-tab');
     let   baCase    = 0;
+
+    /* Inicializa imagens do primeiro caso imediatamente */
+    afterImg.src  = baCases[0].after;
+    beforeImg.src = baCases[0].before;
 
     function activateCase(idx) {
       if (idx === baCase) return;
