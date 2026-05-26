@@ -1402,12 +1402,44 @@
     /* Hint */
     .ba__hint {
       text-align: center;
-      margin-top: 16px;
+      margin-top: 12px;
       font-size: .72rem;
       color: rgba(248,247,244,.22);
       letter-spacing: .08em;
       font-family: var(--f-sans);
     }
+
+    /* Case selector */
+    .ba-tabs {
+      display: flex; gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .ba-tab {
+      display: flex; align-items: center; gap: 7px;
+      padding: 7px 16px;
+      border-radius: 100px;
+      font-family: var(--f-sans);
+      font-size: .7rem; font-weight: 500; letter-spacing: .06em;
+      color: var(--c-text-2);
+      border: 1px solid var(--c-line);
+      background: transparent;
+      cursor: pointer;
+      transition: color .3s, border-color .3s, background .3s;
+    }
+    .ba-tab:hover { color: var(--c-text); border-color: rgba(28,25,23,.18); }
+    .ba-tab.is-active {
+      color: var(--c-gold);
+      border-color: var(--c-gold-border);
+      background: var(--c-gold-pale);
+    }
+    .ba-tab__num {
+      font-family: var(--f-serif);
+      font-size: .82rem; font-weight: 400;
+      opacity: .5; line-height: 1;
+    }
+    .ba-tab.is-active .ba-tab__num { opacity: 1; }
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
@@ -2392,12 +2424,12 @@
 
             <!-- After (base layer, full width) -->
             <div class="ba__layer ba__after">
-              <img src="assets/modelo-sorriso.png" alt="Depois do tratamento" draggable="false" loading="lazy">
+              <img id="baAfterImg" src="assets/modelo-sorriso.png" alt="Depois do tratamento" draggable="false" loading="lazy">
             </div>
 
             <!-- Before (clipped, with filter) -->
             <div class="ba__layer ba__before">
-              <img src="assets/modelo-sorriso.png" alt="Antes do tratamento" draggable="false" loading="lazy">
+              <img id="baBeforeImg" src="assets/modelo-sorriso.png" alt="Antes do tratamento" draggable="false" loading="lazy">
             </div>
 
             <!-- Labels -->
@@ -2415,6 +2447,20 @@
             </div>
 
           </div>
+
+          <!-- Case selector -->
+          <nav class="ba-tabs" role="tablist" aria-label="Selecionar caso de tratamento">
+            <button class="ba-tab is-active" data-case="0" role="tab" aria-selected="true">
+              <span class="ba-tab__num">01</span>Lentes de Contato
+            </button>
+            <button class="ba-tab" data-case="1" role="tab" aria-selected="false">
+              <span class="ba-tab__num">02</span>Clareamento
+            </button>
+            <button class="ba-tab" data-case="2" role="tab" aria-selected="false">
+              <span class="ba-tab__num">03</span>Implantes
+            </button>
+          </nav>
+
           <p class="ba__hint">Arraste para comparar</p>
         </div>
 
@@ -2991,6 +3037,43 @@
         if (e.key === 'ArrowRight') { e.preventDefault(); ba.style.setProperty('--ba-pos', Math.min(94, cur + 2) + '%'); }
       });
     }
+
+    /* ── Case selector ── */
+    const baCases = [
+      { before: 'assets/modelo-sorriso.png', after: 'assets/modelo-sorriso.png' },
+      { before: 'assets/modelo-sorriso.png', after: 'assets/modelo-sorriso.png' },
+      { before: 'assets/modelo-sorriso.png', after: 'assets/modelo-sorriso.png' }
+    ];
+
+    const afterImg  = document.getElementById('baAfterImg');
+    const beforeImg = document.getElementById('baBeforeImg');
+    const baTabs    = document.querySelectorAll('.ba-tab');
+    let   baCase    = 0;
+
+    function activateCase(idx) {
+      if (idx === baCase) return;
+      baCase = idx;
+
+      baTabs.forEach((t, i) => {
+        t.classList.toggle('is-active', i === idx);
+        t.setAttribute('aria-selected', i === idx);
+      });
+
+      /* Fade out → troca imagens → reset slider → fade in */
+      gsap.to(ba, {
+        opacity: 0, duration: .22, ease: 'power2.in',
+        onComplete() {
+          const c = baCases[idx];
+          afterImg.src  = c.after;
+          beforeImg.src = c.before;
+          ba.style.setProperty('--ba-pos', '50%');
+          active = false;
+          gsap.to(ba, { opacity: 1, duration: .32, ease: 'power2.out' });
+        }
+      });
+    }
+
+    baTabs.forEach((tab, i) => tab.addEventListener('click', () => activateCase(i)));
   })();
 
   /* ============================================================
