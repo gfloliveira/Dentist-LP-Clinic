@@ -463,6 +463,7 @@
       position: absolute;
       inset: 0;
       overflow: hidden;
+      opacity: 0; /* estado inicial — GSAP anima para 1 na entrada */
       /* Warm cream gradient — replace with <img> when ready */
       background: linear-gradient(160deg, #EDE5D6 0%, #D8C9AF 40%, #C4B090 70%, #B09A78 100%);
     }
@@ -1864,12 +1865,13 @@
       position: relative; overflow: hidden;
       background: linear-gradient(155deg, #EDE8DF 0%, #D4C9BB 58%, #C2B8A9 100%);
       display: flex; align-items: flex-end; justify-content: center;
+      will-change: clip-path; /* clip-path fica no container, não na img */
     }
     .team__photo img {
       width: 100%; height: 100%;
       object-fit: cover;
       object-position: center 10%;
-      will-change: clip-path, transform;
+      will-change: transform; /* scale só na img */
       display: block;
     }
     .team__photo-badge {
@@ -2878,8 +2880,12 @@
   // 6. Trust bar
   tl.to('.hero__trust', { opacity: 1, y: 0, duration: .7 }, '-=.5');
 
-  // 7. Image (runs earlier in parallel)
-  tl.from('#heroImg', { x: 50, opacity: 0, duration: 1.15, ease: 'power3.out' }, .35);
+  // 7. Image (runs earlier in parallel) — fromTo garante que o estado inicial é explícito
+  tl.fromTo('#heroImg',
+    { x: 50, opacity: 0 },
+    { x: 0, opacity: 1, duration: 1.15, ease: 'power3.out', clearProps: 'transform' },
+    .35
+  );
 
   // 8. Image tag
   tl.to('#imgTag', { opacity: 1, y: 0, duration: .7, ease: 'back.out(1.6)' }, '-=.4');
@@ -3190,13 +3196,23 @@
       }
     );
 
-    /* Fotos: cortina de baixo para cima + zoom-out suave */
-    gsap.fromTo('.team__photo img',
-      { clipPath: 'inset(0 0 100% 0)', scale: 1.1 },
+    /* Fotos: clip-path no container (evita conflito com y do card)
+       scale só na img — separados para não gerar glitch de re-composição */
+    gsap.fromTo('.team__photo',
+      { clipPath: 'inset(0 0 100% 0)' },
       {
-        clipPath: 'inset(0 0 0% 0)', scale: 1.0,
+        clipPath: 'inset(0 0 0% 0)',
         duration: 1.0, stagger: .13, ease: 'power4.out',
         scrollTrigger: st6grid, delay: .28
+      }
+    );
+    gsap.fromTo('.team__photo img',
+      { scale: 1.12 },
+      {
+        scale: 1.0,
+        duration: 1.2, stagger: .13, ease: 'power3.out',
+        scrollTrigger: st6grid, delay: .28,
+        clearProps: 'transform'
       }
     );
   }());
