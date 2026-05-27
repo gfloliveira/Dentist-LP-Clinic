@@ -620,7 +620,7 @@
     @media (max-width: 960px) {
       .hero {
         grid-template-columns: 1fr;
-        grid-template-rows: 54vh 1fr;  /* imagem generosa no mobile */
+        grid-template-rows: 58vh 1fr;  /* mais alto → container portrait → cover escala pela altura */
         height: auto;
         min-height: 100dvh;
       }
@@ -693,7 +693,7 @@
     }
 
     @media (max-width: 520px) {
-      .hero { grid-template-rows: 48vh 1fr; }
+      .hero { grid-template-rows: 54vh 1fr; }
       .hero__headline { font-size: 2.6rem; }
       .hero__sub { max-width: 100%; }
 
@@ -1930,8 +1930,8 @@
        ajustadas para a tela maior do tablet.
     ─────────────────────────────────────────────────────────────── */
     @media (min-width: 768px) and (max-width: 960px) {
-      /* Hero: linha de imagem menor → mais espaço para o conteúdo */
-      .hero { grid-template-rows: 42vh 1fr; }
+      /* Hero: tablet portrait — container portrait → escala pela altura */
+      .hero { grid-template-rows: 52vh 1fr; }
 
       /* Clinic: coluna de imagens um pouco mais alta no tablet */
       .clinic__right { height: clamp(400px, 60vw, 520px); }
@@ -1975,6 +1975,22 @@
 
       /* Results: colunas mais equilibradas nessa faixa */
       .results__inner { grid-template-columns: 1fr 1.25fr; gap: clamp(40px, 4.5vw, 72px); }
+    }
+
+    /* ── Desktop grande: ≥1400px ────────────────────────────────────
+       Sem este bloco, a coluna de imagem da hero fica ~900px × 1080px
+       (quase quadrada). object-fit:cover escala pela largura a ~0.97x
+       (quase tamanho nativo), fazendo o rosto dominar a tela.
+       Aumentando --split e limitando a altura, o container fica mais
+       "portrait" → cover passa a escalar pela altura a ~0.80x, igual
+       ao comportamento "correto" do windowed.
+    ─────────────────────────────────────────────────────────────── */
+    @media (min-width: 1400px) {
+      .hero {
+        --split: 61%;                    /* coluna de imagem = 39% em vez de 47% */
+        height: min(100vh, 880px);       /* teto de altura evita container muito largo */
+      }
+      .hero__img img { object-position: center 20%; }
     }
   </style>
 </head>
